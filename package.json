@@ -26,6 +26,7 @@
     "dist/",
     "ios/",
     "android/",
+    "src/",
     "CapacitorBranchio.podspec"
   ],
   "keywords": [
@@ -41,7 +42,7 @@
       "src": "android"
     },
     "web": {
-      "src": "web"
+      "src": "src"
     }
   },
   "repository": {
