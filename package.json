@@ -13,20 +13,19 @@
   "author": "Sabino Papagna",
   "license": "MIT",
   "dependencies": {
-    "@capacitor/core": "latest"
+    "@capacitor/core": "latest",
+    "@types/node": "^12.6.8",
+    "branch-sdk": "^2.50.2"
   },
   "devDependencies": {
     "@capacitor/android": "latest",
     "@capacitor/ios": "latest",
-    "@types/node": "^12.6.8",
-    "branch-sdk": "^2.50.2",
     "typescript": "^3.2.4"
   },
   "files": [
     "dist/",
     "ios/",
     "android/",
-    "src/",
     "CapacitorBranchio.podspec"
   ],
   "keywords": [
@@ -40,9 +39,6 @@
     },
     "android": {
       "src": "android"
-    },
-    "web": {
-      "src": "src"
     }
   },
   "repository": {
