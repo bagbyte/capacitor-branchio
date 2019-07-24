@@ -39,6 +39,9 @@
     },
     "android": {
       "src": "android"
+    },
+    "web": {
+      "src": "web"
     }
   },
   "repository": {
