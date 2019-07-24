@@ -11,6 +11,10 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
     });
   }
 
+  async load() {
+
+  }
+
   // General
   async init(key: string, options?: InitOptions): Promise<any> {
     branch.init(key, options);
