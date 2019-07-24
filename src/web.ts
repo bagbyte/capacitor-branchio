@@ -1,6 +1,4 @@
-//const branch = require('branch-sdk');
-let branch: any;
-import 'branch-sdk';
+const branch = require('branch-sdk');
 
 import { WebPlugin } from '@capacitor/core';
 import { AppIndexOptions, BranchWebPlugin, CreditHistoryOptions, InitOptions } from './definitions';
@@ -15,7 +13,7 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
 
   // General
   async init(key: string, options?: InitOptions): Promise<any> {
-    branch.initSession(key, options);
+    branch.init(key, options);
   }
 
   async autoAppIndex(options: AppIndexOptions): Promise<any>{
