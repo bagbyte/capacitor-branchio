@@ -6,7 +6,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const branch = require('branch-sdk');
+//const branch = require('branch-sdk');
+let branch;
+import 'branch-sdk';
 import { WebPlugin } from '@capacitor/core';
 export class BranchPluginWeb extends WebPlugin {
     constructor() {

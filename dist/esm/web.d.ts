@@ -1,3 +1,4 @@
+import 'branch-sdk';
 import { WebPlugin } from '@capacitor/core';
 import { AppIndexOptions, BranchWebPlugin, CreditHistoryOptions, InitOptions } from './definitions';
 export declare class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {

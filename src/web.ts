@@ -1,4 +1,6 @@
-const branch = require('branch-sdk');
+//const branch = require('branch-sdk');
+let branch: any;
+import 'branch-sdk';
 
 import { WebPlugin } from '@capacitor/core';
 import { AppIndexOptions, BranchWebPlugin, CreditHistoryOptions, InitOptions } from './definitions';
