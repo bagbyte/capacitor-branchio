@@ -12,14 +12,21 @@ public class BranchPlugin: CAPPlugin {
     
     var testMode = true
     var trackingDisabled = false
-    
+    var verbose = false
+
     public override func load() {
         testMode = getConfigValue("test") as? Bool ?? testMode
-        testMode = getConfigValue("tracking_disabled") as? Bool ?? trackingDisabled
+        trackingDisabled = getConfigValue("tracking_disabled") as? Bool ?? trackingDisabled
+        verbose = getConfigValue("verbose") as? Bool ?? verbose
         
+        self.log("Loading plugin")
+        self.log("Test mode: \(testMode)")
+        self.log("Tracking ddisabled: \(trackingDisabled)")
+        self.log("Verbose: \(verbose)")
+
         Branch.setUseTestBranchKey(testMode)
         Branch.setTrackingDisabled(trackingDisabled)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidFinishLaunching(_ :)), name: Notification.Name("UIApplicationDidFinishLaunchingNotification"), object: nil);
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidReceiveRemoteNotification(_ :)), name: Notification.Name("UIApplicationDidReceiveRemoteNotification"), object: nil);
@@ -29,12 +36,17 @@ public class BranchPlugin: CAPPlugin {
         NotificationCenter.default.addObserver(self, selector: #selector(handleContinueActivity(_ :)), name: Notification.Name(CAPNotifications.ContinueActivity.name()), object: nil);
     }
     
+    private func log(_ message: String) {
+        if (verbose) {
+            print("BranchPlugin - \(message)")
+        }
+    }
+    
     @objc func handleDidFinishLaunching(_ notification: NSNotification) {
-        print("handleDidFinishLaunching")
+        self.log("handleDidFinishLaunching invoked")
+
         if let userInfo = notification.userInfo as? Dictionary<String,Any> {
             if let launchOptions = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
-                print("UIApplicationLaunchOptionsLocationKey")
-                
                 Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
                     print(params as? [String: AnyObject] ?? {})
                 }
@@ -43,69 +55,64 @@ public class BranchPlugin: CAPPlugin {
     }
     
     @objc func handleOpenUrl(_ notification: Notification) {
-        print("handleOpenUrl")
-        
+        self.log("handleOpenUrl invoked")
+
         guard let object = notification.object as? [String: Any] else {
-            print("There is no object on handleOpenUrl");
+            self.log("handleOpenUrl - no object found");
             return;
         }
         
         guard let url = object["url"] as? URL else {
-            print("There is no url on handleOpenUrl");
+            self.log("handleOpenUrl - no url found");
             return;
         }
         
         guard let options = object["options"] as? [UIApplication.OpenURLOptionsKey : Any] else {
-            print("There is no options on handleOpenUrl");
+            self.log("handleOpenUrl - no options found");
             return;
         }
         
-        print("ApplicationOpenUrl with object \(object)")
-        print("ApplicationOpenUrl with url \(url)")
-        print("ApplicationOpenUrl with options \(options)")
+        self.log("handleOpenUrl - invoked with object \(object)")
+        self.log("handleOpenUrl - invoked with url \(url)")
+        self.log("handleOpenUrl - invoked with options \(options)")
         
         Branch.getInstance().application(UIApplication.shared, open: url, options: options)
     }
     
     @objc func handleContinueActivity(_ notification: NSNotification) {
-        print("handleContinueActivity")
+        self.log("handleContinueActivity invoked")
         
-        guard let object = notification.object as? [String: Any] else {
-            print("There is no object on handleContinueActivity");
+        guard let userActivity = notification.object as? NSUserActivity else {
+            self.log("handleContinueActivity - no object found");
             return;
         }
         
-        print("Object in handleContinueActivity: \(object)")
-/*
-        if let userInfo = notification.userInfo as? Dictionary<String,Any> {
-            if let launchOptions = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
-                print("UIApplicationLaunchOptionsLocationKey")
-                
-                Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
-                    print(params as? [String: AnyObject] ?? {})
-                }
-            }
-        }
- */
+        Branch.getInstance().continue(userActivity)
     }
     
     @objc func handleDidReceiveRemoteNotification(_ notification: NSNotification) {
-        print("handleDidReceiveRemoteNotification")
+        self.log("handleDidReceiveRemoteNotification invoked")
         
-        guard let object = notification.object as? [String: Any] else {
-            print("There is no object on handleContinueActivity");
+        guard let userInfo = notification.object as? [AnyHashable : Any] else {
+            self.log("handleDidReceiveRemoteNotification - no object found");
             return;
         }
         
-        print("Object in handleContinueActivity: \(object)")
+        Branch.getInstance().handlePushNotification(userInfo)
     }
     
     @objc func autoAppIndex(_ call: CAPPluginCall) {
+        self.log("autoAppIndex invoked")
+
         call.success()
     }
     
     @objc func disableTracking(_ call: CAPPluginCall) {
+        self.log("disableTracking invoked")
+
         guard let value = call.getBool("value") else {
+            self.log("disableTracking - no value found")
+
             call.error("No value specified for disableTracking")
             return;
         }
@@ -115,7 +122,11 @@ public class BranchPlugin: CAPPlugin {
     }
     
     @objc func setIdentity(_ call: CAPPluginCall) {
+        self.log("setIdentity invoked")
+
         guard let id = call.getString("id") else {
+            self.log("setIdentity - no id found")
+
             call.error("No user id specified")
             return;
         }
@@ -125,18 +136,26 @@ public class BranchPlugin: CAPPlugin {
     }
     
     @objc func logout(_ call: CAPPluginCall) {
+        self.log("logout invoked")
+
         Branch.getInstance().logout()
         call.success()
     }
     
     @objc func redeemRewards(_ call: CAPPluginCall) {
+        self.log("redeemRewards invoked")
+
         guard let amount = call.getInt("amount") else {
+            self.log("redeemRewards - no amount found")
+
             call.error("No amount specified for redeemRewards")
             return;
         }
         
         let callback: callbackWithStatus = {(changed, error) in
             if (error != nil) {
+                self.log("redeemRewards - \(error!.localizedDescription)")
+
                 call.error(error!.localizedDescription)
                 return;
             }
@@ -149,12 +168,17 @@ public class BranchPlugin: CAPPlugin {
         } else {
             Branch.getInstance().redeemRewards(amount, callback: callback)
         }
+        
         call.success()
     }
     
     @objc func creditHistory(_ call: CAPPluginCall) {
+        self.log("creditHistory invoked")
+
         let callback: callbackWithList = {(creditHistory, error) in
             if (error != nil) {
+                self.log("creditHistory - \(error!.localizedDescription)")
+
                 call.error(error!.localizedDescription)
                 return;
             }
@@ -182,7 +206,11 @@ public class BranchPlugin: CAPPlugin {
     }
     
     @objc func logCustomEvent(_ call: CAPPluginCall) {
+        self.log("logCustomEvent invoked")
+
         guard let name = call.getString("name") else {
+            self.log("logCustomEvent - no name found")
+
             call.error("No event name specified for logEvent")
             return;
         }
