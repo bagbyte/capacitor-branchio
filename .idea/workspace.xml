@@ -32,8 +32,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -72,7 +71,11 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -208,43 +211,6 @@
               <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
               <item name="ios" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-              <item name="xcshareddata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-              <item name="xcuserdata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-              <item name="xcuserdata" type="462c0819:PsiDirectoryNode" />
-              <item name="sabino.xcuserdatad" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-              <item name="xcuserdata" type="462c0819:PsiDirectoryNode" />
-              <item name="sabino.xcuserdatad" type="462c0819:PsiDirectoryNode" />
-              <item name="xcdebugger" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -290,7 +256,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="7528000" />
+      <workItem from="1563980758762" duration="7659000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -390,17 +356,24 @@
       <option name="project" value="LOCAL" />
       <updated>1564063024887</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Adding .gitignore">
+      <created>1564064440521</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1564064440521</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16704000" />
+    <option name="totallyTimeSpent" value="16835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27283654" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27283654" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -414,7 +387,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="TeamCity" order="10" weight="0.32974428" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.5693136" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.5693136" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -437,7 +410,8 @@
     <MESSAGE value="Adding logging function and supporting verbose config" />
     <MESSAGE value="Changing tsconfig for es5 compatibility" />
     <MESSAGE value="Changing plugin name to BranchIO" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changing plugin name to BranchIO" />
+    <MESSAGE value="Adding .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding .gitignore" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">
@@ -560,7 +534,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
