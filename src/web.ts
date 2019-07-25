@@ -95,9 +95,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
   }
 
   // Events
-  async logEvent(name: string, eventData?: { [key: string]: any }, eCommerceItems?: { [key: string]: any }[]): Promise<void> {
+  async logCustomEvent(name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[]): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.logEvent(name, eventData, eCommerceItems, (err: any, data: any) => {
+      branch.logEvent(name, data, contentItems, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {

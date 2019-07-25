@@ -44,5 +44,5 @@ export interface BranchWebPlugin {
   creditHistory(options?: CreditHistoryOptions): Promise<any>;
 
   // Events
-  logEvent(name: string, eventData?: { [key: string]: any }, eCommerceItems?: { [key: string]: any }[]): Promise<void>;
+  logCustomEvent(name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[]): Promise<void>;
 }

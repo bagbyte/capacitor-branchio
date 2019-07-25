@@ -10,5 +10,5 @@ CAP_PLUGIN(BranchPlugin, "BranchPlugin",
            CAP_PLUGIN_METHOD(logout, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(redeemRewards, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(creditHistory, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(logEvent, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(logCustomEvent, CAPPluginReturnPromise);
 )

@@ -7,14 +7,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const branch = require('branch-sdk');
-//let branch: any;
-//import 'branch-sdk';
 import { WebPlugin } from '@capacitor/core';
 export class BranchPluginWeb extends WebPlugin {
     constructor() {
         super({
             name: 'BranchPlugin',
             platforms: ['web']
+        });
+    }
+    load() {
+        return __awaiter(this, void 0, void 0, function* () {
         });
     }
     // General
@@ -110,10 +112,10 @@ export class BranchPluginWeb extends WebPlugin {
         });
     }
     // Events
-    logEvent(name, eventData, eCommerceItems) {
+    logCustomEvent(name, data, contentItems) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                branch.logEvent(name, eventData, eCommerceItems, (err, data) => {
+                branch.logEvent(name, data, contentItems, (err, data) => {
                     if (err) {
                         reject(err);
                     }

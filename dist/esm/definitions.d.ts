@@ -35,9 +35,9 @@ export interface BranchWebPlugin {
     logout(): Promise<any>;
     redeemRewards(amount: number, bucket?: string): Promise<any>;
     creditHistory(options?: CreditHistoryOptions): Promise<any>;
-    logEvent(name: string, eventData?: {
+    logCustomEvent(name: string, data?: {
         [key: string]: any;
-    }, eCommerceItems?: {
+    }, contentItems?: {
         [key: string]: any;
     }[]): Promise<void>;
 }
