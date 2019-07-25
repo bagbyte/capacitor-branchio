@@ -8,7 +8,7 @@ import Branch
  */
 @objc(BranchIO)
 public class BranchIO: CAPPlugin {
-    let defaultHistoryListLenght = 50
+    let defaultHistoryListLenght = 100
 
     var testMode = true
     var trackingDisabled = false
@@ -21,12 +21,12 @@ public class BranchIO: CAPPlugin {
 
         self.log("Loading plugin")
         self.log("Test mode: \(testMode)")
-        self.log("Tracking ddisabled: \(trackingDisabled)")
+        self.log("Tracking disabled: \(trackingDisabled)")
         self.log("Verbose: \(verbose)")
 
         Branch.setUseTestBranchKey(testMode)
         Branch.setTrackingDisabled(trackingDisabled)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidFinishLaunching(_ :)), name: Notification.Name("UIApplicationDidFinishLaunchingNotification"), object: nil);
 
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidReceiveRemoteNotification(_ :)), name: Notification.Name("UIApplicationDidReceiveRemoteNotification"), object: nil);
@@ -168,8 +168,6 @@ public class BranchIO: CAPPlugin {
         } else {
             Branch.getInstance().redeemRewards(amount, callback: callback)
         }
-
-        call.success()
     }
 
     @objc func creditHistory(_ call: CAPPluginCall) {
