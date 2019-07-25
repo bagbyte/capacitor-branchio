@@ -1,6 +1,6 @@
 
   Pod::Spec.new do |s|
-    s.name = 'CapacitorBranchio'
+    s.name = 'BagbyteCapacitorBranchio'
     s.version = '0.0.1'
     s.summary = 'Capacitor plugin for web, iOS and Android for using native Branch.io SDK'
     s.license = 'MIT'
