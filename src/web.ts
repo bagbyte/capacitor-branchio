@@ -32,7 +32,7 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     });
   }
 
-  async disableTracking(value: boolean): Promise<any> {
+  async disableTracking(value: boolean): Promise<void> {
     return new Promise((resolve, reject) => {
       branch.disableTracking(value, (err: any, data: any) => {
         if (err) {

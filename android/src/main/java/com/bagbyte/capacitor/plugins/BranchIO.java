@@ -30,8 +30,6 @@ public class BranchIO extends Plugin {
     private Boolean verbose = true;
 
     public void load() {
-        super.load();
-
         this.testMode = Config.getBoolean(CONFIG_KEY_PREFIX + "test", this.testMode);
         this.trackingDisabled = Config.getBoolean(CONFIG_KEY_PREFIX + "tracking_disabled", this.trackingDisabled);
         this.verbose = Config.getBoolean(CONFIG_KEY_PREFIX + "verbose", this.verbose);
@@ -41,10 +39,16 @@ public class BranchIO extends Plugin {
         this.log("Tracking disabled: " + trackingDisabled);
         this.log("Verbose: " + verbose);
 
-        if (this.verbose) {
-            Branch.enableDebugMode();
+        if (this.testMode) {
+            Branch.enableTestMode();
+        } else {
+            Branch.disableTestMode();
         }
 
+        Branch.getInstance().disableTracking(trackingDisabled);
+
+        Branch.getAutoInstance(this.getActivity());
+        /*
         Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
@@ -57,7 +61,7 @@ public class BranchIO extends Plugin {
                 }
             }
         }, this.getActivity().getIntent().getData(), this.getActivity());
-
+        */
     }
 
     private void log(String message) {
