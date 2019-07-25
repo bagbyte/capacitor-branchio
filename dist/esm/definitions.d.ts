@@ -1,6 +1,6 @@
 declare module "@capacitor/core" {
     interface PluginRegistry {
-        BranchPlugin: BranchPluginPlugin;
+        BranchIO: BranchPlugin;
     }
 }
 export interface InitOptions {
@@ -27,7 +27,7 @@ export interface CreditHistoryOptions {
     begin_after_id?: string;
     bucket?: string;
 }
-export interface BranchPluginPlugin {
+export interface BranchPlugin {
     init(key: string, options?: InitOptions): Promise<any>;
     autoAppIndex(options: AppIndexOptions): Promise<any>;
     disableTracking(value: boolean): Promise<any>;

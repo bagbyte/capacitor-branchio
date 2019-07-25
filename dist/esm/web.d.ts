@@ -1,6 +1,6 @@
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchPluginPlugin, CreditHistoryOptions, InitOptions } from './definitions';
-export declare class BranchPluginWeb extends WebPlugin implements BranchPluginPlugin {
+import { AppIndexOptions, BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     constructor();
     load(): Promise<void>;
     init(key: string, options?: InitOptions): Promise<any>;
@@ -16,5 +16,5 @@ export declare class BranchPluginWeb extends WebPlugin implements BranchPluginPl
         [key: string]: any;
     }[]): Promise<void>;
 }
-declare const BranchPlugin: BranchPluginWeb;
-export { BranchPlugin };
+declare const BranchIO: BranchPluginWeb;
+export { BranchIO };

@@ -1,12 +1,12 @@
 const branch = require('branch-sdk');
 
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchPluginPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+import { AppIndexOptions, BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
 
-export class BranchPluginWeb extends WebPlugin implements BranchPluginPlugin {
+export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   constructor() {
     super({
-      name: 'BranchPlugin',
+      name: 'BranchIO',
       platforms: ['web']
     });
   }
@@ -108,9 +108,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPluginPlugin {
   }
 }
 
-const BranchPlugin = new BranchPluginWeb();
+const BranchIO = new BranchPluginWeb();
 
-export { BranchPlugin };
+export { BranchIO };
 
 import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(BranchPlugin);
+registerWebPlugin(BranchIO);

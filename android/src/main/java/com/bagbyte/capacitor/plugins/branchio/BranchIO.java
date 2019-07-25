@@ -1,4 +1,4 @@
-package com.bagbyte.capacitor-branchio;
+package com.bagbyte.capacitor.plugins;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
@@ -7,7 +7,7 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
 @NativePlugin()
-public class BranchPlugin extends Plugin {
+public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void echo(PluginCall call) {

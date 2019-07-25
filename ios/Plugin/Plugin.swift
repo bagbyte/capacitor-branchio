@@ -6,10 +6,10 @@ import Branch
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitor.ionicframework.com/docs/plugins/ios
  */
-@objc(BranchPlugin)
-public class BranchPlugin: CAPPlugin {
+@objc(BranchIO)
+public class BranchIO: CAPPlugin {
     let defaultHistoryListLenght = 50
-    
+
     var testMode = true
     var trackingDisabled = false
     var verbose = false
@@ -18,7 +18,7 @@ public class BranchPlugin: CAPPlugin {
         testMode = getConfigValue("test") as? Bool ?? testMode
         trackingDisabled = getConfigValue("tracking_disabled") as? Bool ?? trackingDisabled
         verbose = getConfigValue("verbose") as? Bool ?? verbose
-        
+
         self.log("Loading plugin")
         self.log("Test mode: \(testMode)")
         self.log("Tracking ddisabled: \(trackingDisabled)")
@@ -28,20 +28,20 @@ public class BranchPlugin: CAPPlugin {
         Branch.setTrackingDisabled(trackingDisabled)
 
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidFinishLaunching(_ :)), name: Notification.Name("UIApplicationDidFinishLaunchingNotification"), object: nil);
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidReceiveRemoteNotification(_ :)), name: Notification.Name("UIApplicationDidReceiveRemoteNotification"), object: nil);
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleOpenUrl(_ :)), name: Notification.Name(CAPNotifications.URLOpen.name()), object: nil);
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleContinueActivity(_ :)), name: Notification.Name(CAPNotifications.ContinueActivity.name()), object: nil);
     }
-    
+
     private func log(_ message: String) {
         if (verbose) {
-            print("BranchPlugin - \(message)")
+            print("BranchIO - \(message)")
         }
     }
-    
+
     @objc func handleDidFinishLaunching(_ notification: NSNotification) {
         self.log("handleDidFinishLaunching invoked")
 
@@ -53,7 +53,7 @@ public class BranchPlugin: CAPPlugin {
             }
         }
     }
-    
+
     @objc func handleOpenUrl(_ notification: Notification) {
         self.log("handleOpenUrl invoked")
 
@@ -61,52 +61,52 @@ public class BranchPlugin: CAPPlugin {
             self.log("handleOpenUrl - no object found");
             return;
         }
-        
+
         guard let url = object["url"] as? URL else {
             self.log("handleOpenUrl - no url found");
             return;
         }
-        
+
         guard let options = object["options"] as? [UIApplication.OpenURLOptionsKey : Any] else {
             self.log("handleOpenUrl - no options found");
             return;
         }
-        
+
         self.log("handleOpenUrl - invoked with object \(object)")
         self.log("handleOpenUrl - invoked with url \(url)")
         self.log("handleOpenUrl - invoked with options \(options)")
-        
+
         Branch.getInstance().application(UIApplication.shared, open: url, options: options)
     }
-    
+
     @objc func handleContinueActivity(_ notification: NSNotification) {
         self.log("handleContinueActivity invoked")
-        
+
         guard let userActivity = notification.object as? NSUserActivity else {
             self.log("handleContinueActivity - no object found");
             return;
         }
-        
+
         Branch.getInstance().continue(userActivity)
     }
-    
+
     @objc func handleDidReceiveRemoteNotification(_ notification: NSNotification) {
         self.log("handleDidReceiveRemoteNotification invoked")
-        
+
         guard let userInfo = notification.object as? [AnyHashable : Any] else {
             self.log("handleDidReceiveRemoteNotification - no object found");
             return;
         }
-        
+
         Branch.getInstance().handlePushNotification(userInfo)
     }
-    
+
     @objc func autoAppIndex(_ call: CAPPluginCall) {
         self.log("autoAppIndex invoked")
 
         call.success()
     }
-    
+
     @objc func disableTracking(_ call: CAPPluginCall) {
         self.log("disableTracking invoked")
 
@@ -120,7 +120,7 @@ public class BranchPlugin: CAPPlugin {
         Branch.setTrackingDisabled(value)
         call.success()
     }
-    
+
     @objc func setIdentity(_ call: CAPPluginCall) {
         self.log("setIdentity invoked")
 
@@ -130,18 +130,18 @@ public class BranchPlugin: CAPPlugin {
             call.error("No user id specified")
             return;
         }
-        
+
         Branch.getInstance().setIdentity(id)
         call.success()
     }
-    
+
     @objc func logout(_ call: CAPPluginCall) {
         self.log("logout invoked")
 
         Branch.getInstance().logout()
         call.success()
     }
-    
+
     @objc func redeemRewards(_ call: CAPPluginCall) {
         self.log("redeemRewards invoked")
 
@@ -151,7 +151,7 @@ public class BranchPlugin: CAPPlugin {
             call.error("No amount specified for redeemRewards")
             return;
         }
-        
+
         let callback: callbackWithStatus = {(changed, error) in
             if (error != nil) {
                 self.log("redeemRewards - \(error!.localizedDescription)")
@@ -159,19 +159,19 @@ public class BranchPlugin: CAPPlugin {
                 call.error(error!.localizedDescription)
                 return;
             }
-            
+
             call.success(["changed": changed])
         }
-        
+
         if let bucket = call.getString("bucket") {
             Branch.getInstance().redeemRewards(amount, forBucket: bucket, callback: callback)
         } else {
             Branch.getInstance().redeemRewards(amount, callback: callback)
         }
-        
+
         call.success()
     }
-    
+
     @objc func creditHistory(_ call: CAPPluginCall) {
         self.log("creditHistory invoked")
 
@@ -182,10 +182,10 @@ public class BranchPlugin: CAPPlugin {
                 call.error(error!.localizedDescription)
                 return;
             }
-            
+
             call.success(["list": creditHistory ?? {}])
         }
-        
+
         if let options = call.getObject("options") {
             if let bucket = options["bucket"] as? String {
                 if let after = options["begin_after_id"] as? String {
@@ -204,7 +204,7 @@ public class BranchPlugin: CAPPlugin {
             Branch.getInstance().getCreditHistory(callback: callback)
         }
     }
-    
+
     @objc func logCustomEvent(_ call: CAPPluginCall) {
         self.log("logCustomEvent invoked")
 
@@ -214,9 +214,9 @@ public class BranchPlugin: CAPPlugin {
             call.error("No event name specified for logEvent")
             return;
         }
-        
+
         let event = BranchEvent.customEvent(withName: name)
-        
+
         if let data = call.getObject("data") {
             for (key, value) in data {
                 event.customData[key] = value
@@ -226,7 +226,7 @@ public class BranchPlugin: CAPPlugin {
         if let contentItems = call.getArray("contentItems", [String:Any].self) {
             for contentItem in contentItems {
                 let branchUniversalObject = BranchUniversalObject.init()
-                
+
             }
         }
 */

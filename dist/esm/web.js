@@ -52,7 +52,7 @@ var BranchPluginWeb = /** @class */ (function (_super) {
     __extends(BranchPluginWeb, _super);
     function BranchPluginWeb() {
         return _super.call(this, {
-            name: 'BranchPlugin',
+            name: 'BranchIO',
             platforms: ['web']
         }) || this;
     }
@@ -190,8 +190,8 @@ var BranchPluginWeb = /** @class */ (function (_super) {
     return BranchPluginWeb;
 }(WebPlugin));
 export { BranchPluginWeb };
-var BranchPlugin = new BranchPluginWeb();
-export { BranchPlugin };
+var BranchIO = new BranchPluginWeb();
+export { BranchIO };
 import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(BranchPlugin);
+registerWebPlugin(BranchIO);
 //# sourceMappingURL=web.js.map

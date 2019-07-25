@@ -31,10 +31,19 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="Adding logging function and supporting verbose config">
+    <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="Changing plugin name to BranchIO">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor-branchio/BranchPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/branchio/BranchIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/definitions.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/definitions.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/web.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/web.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/web.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/web.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/esm/web.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/esm/web.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/definitions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/web.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/web.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -68,8 +77,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/web.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="95" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="171">
+              <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/branchio/BranchIO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="21" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -97,21 +124,19 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tsconfig.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/@capacitor/core/dist/esm/web/index.d.ts">
+        <entry file="file://$PROJECT_DIR$/dist/esm/web.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="21" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-            </state>
+            <state relative-caret-position="-301" />
           </provider>
         </entry>
       </file>
@@ -124,13 +149,11 @@
       <find>bag</find>
       <find>static_framework</find>
       <find>com.</find>
-      <find>BranchPluginPlugin</find>
       <find>echo</find>
       <find>main</find>
       <find>WebPlugin</find>
       <find>branch</find>
       <find>export</find>
-      <find>BranchPlugin</find>
       <find>CapacitorBranchio</find>
       <find>podspec</find>
       <find>eCommerceItems</find>
@@ -138,12 +161,23 @@
       <find>BranchWebPlugin</find>
       <find>BranchPluginWeb</find>
       <find>@bagbyte/capacitor-branchio</find>
+      <find>BranchPluginPlugin</find>
+      <find>com.bagbyte</find>
+      <find>capacitorbranchio</find>
+      <find>BranchPlugin</find>
+      <find>Branch</find>
+      <find>BranchIO</find>
     </findStrings>
     <replaceStrings>
-      <replace>BranchPlugin</replace>
       <replace>BranchPluginPlugin</replace>
       <replace>contentItems</replace>
+      <replace>BranchIO</replace>
+      <replace>BranchPlugin</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/branchio</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -158,11 +192,13 @@
       <list>
         <option value="$PROJECT_DIR$/CapacitorBranchio.podspec" />
         <option value="$PROJECT_DIR$/ios/Podfile" />
-        <option value="$PROJECT_DIR$/src/web.ts" />
         <option value="$PROJECT_DIR$/BagbyteCapacitorBranchio.podspec" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/definitions.ts" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
+        <option value="$PROJECT_DIR$/src/web.ts" />
+        <option value="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor-branchio/BranchPlugin.java" />
+        <option value="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -193,6 +229,92 @@
               <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
               <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="bagbyte" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="bagbyte" type="462c0819:PsiDirectoryNode" />
+              <item name="capacitor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="bagbyte" type="462c0819:PsiDirectoryNode" />
+              <item name="capacitor" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="bagbyte" type="462c0819:PsiDirectoryNode" />
+              <item name="capacitor" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="branchio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -211,6 +333,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/branchio" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -237,7 +360,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="5937000" />
+      <workItem from="1563980758762" duration="6798000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -323,11 +446,18 @@
       <option name="project" value="LOCAL" />
       <updated>1564061438595</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Changing tsconfig for es5 compatibility">
+      <created>1564062189007</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1564062189007</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15113000" />
+    <option name="totallyTimeSpent" value="15974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
@@ -368,7 +498,9 @@
     <MESSAGE value="Updating dependencies config" />
     <MESSAGE value="Update build" />
     <MESSAGE value="Adding logging function and supporting verbose config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding logging function and supporting verbose config" />
+    <MESSAGE value="Changing tsconfig for es5 compatibility" />
+    <MESSAGE value="Changing plugin name to BranchIO" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changing plugin name to BranchIO" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.npmignore">
@@ -434,13 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/web.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/esm/definitions.d.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -464,7 +589,33 @@
     <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="21" column="1" lean-forward="true" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/esm/web.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-301" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/web.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/branchio/BranchIO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="21" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
