@@ -46,22 +46,6 @@ public class BranchIO extends Plugin {
         } else {
             Branch.disableTestMode();
         }
-
-//        Branch branch = Branch.getInstance(this.getContext()).disableTracking(trackingDisabled);
-        /*
-        O.initSession(new Branch.BranchReferralInitListener() {
-            @Override
-            public void onInitFinished(JSONObject referringParams, BranchError error) {
-                if (error == null) {
-                    log("onInitFinished - " + referringParams.toString());
-                    // Retrieve deeplink keys from 'referringParams' and evaluate the values to determine where to route the user
-                    // Check '+clicked_branch_link' before deciding whether to use your Branch routing logic
-                } else {
-                    log("onInitFinished - " + error.getMessage());
-                }
-            }
-        }, this.getActivity().getIntent().getData(), this.getActivity());
-        */
     }
 
     @Override
