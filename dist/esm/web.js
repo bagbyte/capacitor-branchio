@@ -64,10 +64,10 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         });
     };
     // General
-    BranchPluginWeb.prototype.init = function (key, options) {
+    BranchPluginWeb.prototype.init = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                branch.init(key, options);
+                branch.init(options.key, options.options);
                 return [2 /*return*/];
             });
         });
@@ -76,7 +76,7 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.autoAppIndex(options, function (err, data) {
+                        branch.autoAppIndex(options.options, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
@@ -88,11 +88,11 @@ var BranchPluginWeb = /** @class */ (function (_super) {
             });
         });
     };
-    BranchPluginWeb.prototype.disableTracking = function (value) {
+    BranchPluginWeb.prototype.disableTracking = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.disableTracking(value, function (err, data) {
+                        branch.disableTracking(options.value, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
@@ -105,11 +105,11 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         });
     };
     // Track users
-    BranchPluginWeb.prototype.setIdentity = function (id) {
+    BranchPluginWeb.prototype.setIdentity = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.setIdentity(id, function (err, data) {
+                        branch.setIdentity(options.id, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
@@ -138,11 +138,11 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         });
     };
     // Referrals
-    BranchPluginWeb.prototype.redeemRewards = function (amount, bucket) {
+    BranchPluginWeb.prototype.redeemRewards = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.redeemRewards(amount, bucket, function (err, data) {
+                        branch.redeemRewards(options.amount, options.bucket, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
@@ -158,7 +158,7 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.creditHistory(options, function (err, data) {
+                        branch.creditHistory(options.options, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
@@ -171,11 +171,11 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         });
     };
     // Events
-    BranchPluginWeb.prototype.logCustomEvent = function (name, data, contentItems) {
+    BranchPluginWeb.prototype.logCustomEvent = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.logEvent(name, data, contentItems, function (err, data) {
+                        branch.logEvent(options.name, options.data, options.contentItems, function (err, data) {
                             if (err) {
                                 reject(err);
                             }

@@ -28,16 +28,34 @@ export interface CreditHistoryOptions {
     bucket?: string;
 }
 export interface BranchPlugin {
-    init(key: string, options?: InitOptions): Promise<any>;
-    autoAppIndex(options: AppIndexOptions): Promise<any>;
-    disableTracking(value: boolean): Promise<any>;
-    setIdentity(id: string): Promise<any>;
+    init(options: {
+        key: string;
+        options?: InitOptions;
+    }): Promise<any>;
+    autoAppIndex(options: {
+        options: AppIndexOptions;
+    }): Promise<any>;
+    disableTracking(options: {
+        value: boolean;
+    }): Promise<any>;
+    setIdentity(options: {
+        id: string;
+    }): Promise<any>;
     logout(): Promise<any>;
-    redeemRewards(amount: number, bucket?: string): Promise<any>;
-    creditHistory(options?: CreditHistoryOptions): Promise<any>;
-    logCustomEvent(name: string, data?: {
-        [key: string]: any;
-    }, contentItems?: {
-        [key: string]: any;
-    }[]): Promise<void>;
+    redeemRewards(options: {
+        amount: number;
+        bucket?: string;
+    }): Promise<any>;
+    creditHistory(options: {
+        options?: CreditHistoryOptions;
+    }): Promise<any>;
+    logCustomEvent(options: {
+        name: string;
+        data?: {
+            [key: string]: any;
+        };
+        contentItems?: {
+            [key: string]: any;
+        }[];
+    }): Promise<void>;
 }

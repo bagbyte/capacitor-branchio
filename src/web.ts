@@ -16,13 +16,13 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   }
 
   // General
-  async init(key: string, options?: InitOptions): Promise<any> {
-    branch.init(key, options);
+  async init(options: { key: string, options?: InitOptions}): Promise<any> {
+    branch.init(options.key, options.options);
   }
 
-  async autoAppIndex(options: AppIndexOptions): Promise<any>{
+  async autoAppIndex(options: { options: AppIndexOptions }): Promise<any>{
     return new Promise((resolve, reject) => {
-      branch.autoAppIndex(options, (err: any, data: any) => {
+      branch.autoAppIndex(options.options, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -32,9 +32,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     });
   }
 
-  async disableTracking(value: boolean): Promise<void> {
+  async disableTracking(options: { value: boolean }): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.disableTracking(value, (err: any, data: any) => {
+      branch.disableTracking(options.value, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -45,9 +45,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   }
 
   // Track users
-  async setIdentity(id: string): Promise<any> {
+  async setIdentity(options: { id: string }): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.setIdentity(id, (err: any, data: any) => {
+      branch.setIdentity(options.id, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -70,9 +70,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   }
 
   // Referrals
-  async redeemRewards(amount: number, bucket?: string): Promise<any> {
+  async redeemRewards(options: { amount: number, bucket?: string}): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.redeemRewards(amount, bucket, (err: any, data: any) => {
+      branch.redeemRewards(options.amount, options.bucket, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -82,9 +82,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     });
   }
 
-  async creditHistory(options?: CreditHistoryOptions): Promise<any> {
+  async creditHistory(options: { options?: CreditHistoryOptions }): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.creditHistory(options, (err: any, data: any) => {
+      branch.creditHistory(options.options, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -95,9 +95,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   }
 
   // Events
-  async logCustomEvent(name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[]): Promise<void> {
+  async logCustomEvent(options: { name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[] }): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.logEvent(name, data, contentItems, (err: any, data: any) => {
+      branch.logEvent(options.name, options.data, options.contentItems, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {

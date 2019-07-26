@@ -47,12 +47,9 @@ public class BranchIO extends Plugin {
             Branch.disableTestMode();
         }
 
-        branchInstance = Branch.getAutoInstance(this.getActivity());
-        branchInstance.disableTracking(trackingDisabled);
-
 //        Branch branch = Branch.getInstance(this.getContext()).disableTracking(trackingDisabled);
         /*
-        Branch branch = Branch.getInstance(getApplicationContext()).initSession(new Branch.BranchReferralInitListener() {
+        O.initSession(new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
                 if (error == null) {
@@ -66,6 +63,13 @@ public class BranchIO extends Plugin {
         }, this.getActivity().getIntent().getData(), this.getActivity());
         */
     }
+
+    @Override
+    protected void handleOnStart() {
+        branchInstance = Branch.getAutoInstance(this.getActivity());
+        branchInstance.disableTracking(trackingDisabled);
+    }
+
 
     private void log(String message) {
         if (this.verbose) {
