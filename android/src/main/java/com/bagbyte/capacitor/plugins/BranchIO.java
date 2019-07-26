@@ -39,6 +39,8 @@ public class BranchIO extends Plugin {
         this.log("Tracking disabled: " + trackingDisabled);
         this.log("Verbose: " + verbose);
 
+        Branch.getAutoInstance(this.getActivity());
+
         if (this.testMode) {
             Branch.enableTestMode();
         } else {
@@ -46,8 +48,6 @@ public class BranchIO extends Plugin {
         }
 
         Branch.getInstance().disableTracking(trackingDisabled);
-
-        Branch.getAutoInstance(this.getActivity());
         /*
         Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
             @Override

@@ -4,3 +4,4 @@
 *.log
 
 xcuserdata
+node_modules
