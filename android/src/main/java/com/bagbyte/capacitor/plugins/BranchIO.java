@@ -1,6 +1,5 @@
 package com.bagbyte.capacitor.plugins;
 
-import com.getcapacitor.Config;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
@@ -22,24 +21,18 @@ import io.branch.referral.util.BranchEvent;
 @NativePlugin()
 public class BranchIO extends Plugin {
     private static final String PLUGIN_TAG = "BranchIO";
-    private static final String CONFIG_KEY_PREFIX = "plugins." + PLUGIN_TAG + ".";
     private static final Integer DEFAULT_HISTORY_LIST_LENGTH = 100;
 
     private Boolean testMode = true;
-    private Boolean trackingDisabled = true;
-    private Boolean verbose = true;
+    private Boolean trackingDisabled = false;
+    private Boolean verbose = false;
 
     private Branch branchInstance;
 
     public void load() {
-        this.testMode = Config.getBoolean(CONFIG_KEY_PREFIX + "test", this.testMode);
-        this.trackingDisabled = Config.getBoolean(CONFIG_KEY_PREFIX + "tracking_disabled", this.trackingDisabled);
-        this.verbose = Config.getBoolean(CONFIG_KEY_PREFIX + "verbose", this.verbose);
-
         this.log("Loading plugin");
-        this.log("Test mode: " + testMode);
-        this.log("Tracking disabled: " + trackingDisabled);
-        this.log("Verbose: " + verbose);
+
+        loadConfig();
 
         if (this.testMode) {
             Branch.enableTestMode();
@@ -48,12 +41,50 @@ public class BranchIO extends Plugin {
         }
     }
 
-    @Override
-    protected void handleOnStart() {
-        branchInstance = Branch.getAutoInstance(this.getActivity());
-        branchInstance.disableTracking(trackingDisabled);
+    private void loadConfig() {
+        Object testConfig = getConfigValue("test");
+
+        if (testConfig != null) {
+            testMode = ((Boolean) testConfig);
+        }
+
+        Object trackingDisabledConfig = getConfigValue("tracking_disabled");
+
+        if (trackingDisabledConfig != null) {
+            trackingDisabled = ((Boolean) trackingDisabledConfig);
+        }
+
+        Object verboseConfig = getConfigValue("verbose");
+
+        if (verboseConfig != null) {
+            verbose = ((Boolean) verboseConfig);
+        }
+
+        this.log("Test mode: " + testMode);
+        this.log("Tracking disabled: " + trackingDisabled);
+        this.log("Verbose: " + verbose);
     }
 
+    @Override
+    protected void handleOnStart() {
+        branchInstance = Branch.getAutoInstance(this.getActivity().getApplication());
+        branchInstance.disableTracking(trackingDisabled);
+
+        branchInstance.initSession(new Branch.BranchReferralInitListener() {
+            @Override
+            public void onInitFinished(JSONObject referringParams, BranchError error) {
+                if (error != null) {
+                    log("onInitFinished - " + error.getMessage());
+                } else {
+                    log("onInitFinished invoked with " + referringParams.toString());
+
+                    // Retrieve deeplink keys from 'referringParams' and evaluate the values to determine where to route the user
+                    // Check '+clicked_branch_link' before deciding whether to use your Branch routing logic
+                }
+            }
+
+        }, getActivity().getIntent().getData(), getActivity());
+    }
 
     private void log(String message) {
         if (this.verbose) {
@@ -113,6 +144,8 @@ public class BranchIO extends Plugin {
             return;
         }
 
+        log("setIdentity ID: " + call.getString("id"));
+
         branchInstance.setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
@@ -131,8 +164,6 @@ public class BranchIO extends Plugin {
                 callback("logout", call, loggedOut, error);
             }
         });
-
-        call.success();
     }
 
     @PluginMethod()
