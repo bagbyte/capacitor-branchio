@@ -29,6 +29,8 @@ public class BranchIO extends Plugin {
     private Boolean trackingDisabled = true;
     private Boolean verbose = true;
 
+    private Branch branchInstance;
+
     public void load() {
         this.testMode = Config.getBoolean(CONFIG_KEY_PREFIX + "test", this.testMode);
         this.trackingDisabled = Config.getBoolean(CONFIG_KEY_PREFIX + "tracking_disabled", this.trackingDisabled);
@@ -39,17 +41,18 @@ public class BranchIO extends Plugin {
         this.log("Tracking disabled: " + trackingDisabled);
         this.log("Verbose: " + verbose);
 
-        Branch.getAutoInstance(this.getActivity());
-
         if (this.testMode) {
             Branch.enableTestMode();
         } else {
             Branch.disableTestMode();
         }
 
-        Branch.getInstance().disableTracking(trackingDisabled);
+        branchInstance = Branch.getAutoInstance(this.getActivity());
+        branchInstance.disableTracking(trackingDisabled);
+
+//        Branch branch = Branch.getInstance(this.getContext()).disableTracking(trackingDisabled);
         /*
-        Branch.getInstance().initSession(new Branch.BranchReferralInitListener() {
+        Branch branch = Branch.getInstance(getApplicationContext()).initSession(new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
                 if (error == null) {
@@ -106,7 +109,7 @@ public class BranchIO extends Plugin {
             return;
         }
 
-        Branch.getInstance().disableTracking(call.getBoolean("value"));
+        Branch branch = Branch.getInstance(getApplicationContext()).disableTracking(call.getBoolean("value"));
 
         call.success();
     }
@@ -122,7 +125,7 @@ public class BranchIO extends Plugin {
             return;
         }
 
-        Branch.getInstance().setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
+        Branch branch = Branch.getInstance(getApplicationContext()).setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
                 callback("setIdentity", call, referringParams, error);
@@ -134,7 +137,7 @@ public class BranchIO extends Plugin {
     public void logout(final PluginCall call) {
         this.log("logout invoked");
 
-        Branch.getInstance().logout(new Branch.LogoutStatusListener() {
+        Branch branch = Branch.getInstance(getApplicationContext()).logout(new Branch.LogoutStatusListener() {
             @Override
             public void onLogoutFinished(boolean loggedOut, BranchError error) {
                 callback("logout", call, loggedOut, error);
@@ -165,9 +168,9 @@ public class BranchIO extends Plugin {
         };
 
         if (call.hasOption("bucket")) {
-            Branch.getInstance().redeemRewards(call.getString("bucket"), amount, callback);
+            Branch branch = Branch.getInstance(getApplicationContext()).redeemRewards(call.getString("bucket"), amount, callback);
         } else {
-            Branch.getInstance().redeemRewards(amount, callback);
+            Branch branch = Branch.getInstance(getApplicationContext()).redeemRewards(amount, callback);
         }
     }
 
@@ -184,14 +187,14 @@ public class BranchIO extends Plugin {
 
         if (call.hasOption("options")) {
             JSObject options = call.getObject("options");
-            Branch.getInstance().getCreditHistory(
+            Branch branch = Branch.getInstance(getApplicationContext()).getCreditHistory(
                     options.getString("bucket"),
                     options.getString("begin_after_id"),
                     options.getInteger("length", DEFAULT_HISTORY_LIST_LENGTH),
                     Branch.CreditHistoryOrder.kMostRecentFirst,
                     callback);
         } else {
-            Branch.getInstance().getCreditHistory(callback);
+            Branch branch = Branch.getInstance(getApplicationContext()).getCreditHistory(callback);
         }
     }
 
