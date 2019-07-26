@@ -31,9 +31,9 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="All methods created">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="Bugfixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcworkspace/xcuserdata/sabino.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -196,7 +196,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="12310000" />
+      <workItem from="1563980758762" duration="13036000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -324,11 +324,25 @@
       <option name="project" value="LOCAL" />
       <updated>1564098742923</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Bugfixing">
+      <created>1564134545175</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1564134545175</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Bugfixing">
+      <created>1564135081137</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1564135081137</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21486000" />
+    <option name="totallyTimeSpent" value="22212000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
@@ -373,7 +387,8 @@
     <MESSAGE value="Adding .gitignore" />
     <MESSAGE value="All methods created" />
     <MESSAGE value="Updating code with new initialization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating code with new initialization" />
+    <MESSAGE value="Bugfixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfixing" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">

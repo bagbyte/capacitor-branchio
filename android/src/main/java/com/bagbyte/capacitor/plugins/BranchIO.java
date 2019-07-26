@@ -109,7 +109,7 @@ public class BranchIO extends Plugin {
             return;
         }
 
-        Branch branch = Branch.getInstance(getApplicationContext()).disableTracking(call.getBoolean("value"));
+        branchInstance.disableTracking(call.getBoolean("value"));
 
         call.success();
     }
@@ -125,7 +125,7 @@ public class BranchIO extends Plugin {
             return;
         }
 
-        Branch branch = Branch.getInstance(getApplicationContext()).setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
+        branchInstance.setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
                 callback("setIdentity", call, referringParams, error);
@@ -137,7 +137,7 @@ public class BranchIO extends Plugin {
     public void logout(final PluginCall call) {
         this.log("logout invoked");
 
-        Branch branch = Branch.getInstance(getApplicationContext()).logout(new Branch.LogoutStatusListener() {
+        branchInstance.logout(new Branch.LogoutStatusListener() {
             @Override
             public void onLogoutFinished(boolean loggedOut, BranchError error) {
                 callback("logout", call, loggedOut, error);
@@ -168,9 +168,9 @@ public class BranchIO extends Plugin {
         };
 
         if (call.hasOption("bucket")) {
-            Branch branch = Branch.getInstance(getApplicationContext()).redeemRewards(call.getString("bucket"), amount, callback);
+            branchInstance.redeemRewards(call.getString("bucket"), amount, callback);
         } else {
-            Branch branch = Branch.getInstance(getApplicationContext()).redeemRewards(amount, callback);
+            branchInstance.redeemRewards(amount, callback);
         }
     }
 
@@ -187,14 +187,14 @@ public class BranchIO extends Plugin {
 
         if (call.hasOption("options")) {
             JSObject options = call.getObject("options");
-            Branch branch = Branch.getInstance(getApplicationContext()).getCreditHistory(
+            branchInstance.getCreditHistory(
                     options.getString("bucket"),
                     options.getString("begin_after_id"),
                     options.getInteger("length", DEFAULT_HISTORY_LIST_LENGTH),
                     Branch.CreditHistoryOrder.kMostRecentFirst,
                     callback);
         } else {
-            Branch branch = Branch.getInstance(getApplicationContext()).getCreditHistory(callback);
+            branchInstance.getCreditHistory(callback);
         }
     }
 
