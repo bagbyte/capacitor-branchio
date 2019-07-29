@@ -7,27 +7,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
 
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
 import io.branch.referral.Defines;
 import io.branch.referral.ServerRequest;
 import io.branch.referral.ServerResponse;
-import io.branch.referral.util.BRANCH_STANDARD_EVENT;
+import io.branch.referral.util.AdType;
 import io.branch.referral.util.BranchEvent;
+import io.branch.referral.util.CurrencyType;
 
 public class BranchIOEvent extends BranchEvent {
-    protected boolean _isStandardEvent;
     private String _eventName;
-
-    /**
-     * Constructor.
-     * @param branchStandardEvent Branch Standard Event
-     */
-    public BranchIOEvent(BRANCH_STANDARD_EVENT branchStandardEvent) throws NoSuchFieldException, IllegalAccessException {
-        this(branchStandardEvent.getName());
-    }
+    private boolean _isStandardEvent;
 
     /**
      * Constructor.
@@ -35,44 +30,66 @@ public class BranchIOEvent extends BranchEvent {
      * Event names that match Standard Events will be treated as Standard Events.
      * @param eventName Event Name.
      */
-    public BranchIOEvent(String eventName) throws NoSuchFieldException, IllegalAccessException {
+    BranchIOEvent(String eventName) throws NoSuchFieldException, IllegalAccessException {
         super(eventName);
 
         this._eventName = eventName;
+        this._isStandardEvent = this.getSuperProperty("isStandardEvent");
 
-        Field field = BranchEvent.class.getDeclaredField("isStandardEvent");
-        field.setAccessible(true);
-        this._isStandardEvent = field.getBoolean(this);
+        this.setAdType(AdType.NATIVE);
     }
 
     private JSONObject getStandardProperties() throws NoSuchFieldException, IllegalAccessException {
-        Field field = BranchEvent.class.getDeclaredField("standardProperties");
-        field.setAccessible(true);
-
-        return ((JSONObject) field.get(this));
+        return this.getSuperProperty("standardProperties");
     }
 
     private JSONObject getCustomProperties() throws NoSuchFieldException, IllegalAccessException {
-        Field field = BranchEvent.class.getDeclaredField("customProperties");
-        field.setAccessible(true);
-
-        return ((JSONObject) field.get(this));
+        return this.getSuperProperty("customProperties");
     }
 
     private List<BranchUniversalObject> getBuoList() throws NoSuchFieldException, IllegalAccessException {
-        Field field = BranchEvent.class.getDeclaredField("buoList");
-        field.setAccessible(true);
-
-        return cast(field.get(this));
+        return castList(this.getSuperProperty("buoList"));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends List<?>> T cast(Object obj) {
+    private <T> T getSuperProperty(String propertyName) throws NoSuchFieldException, IllegalAccessException {
+        Field field = BranchEvent.class.getDeclaredField(propertyName);
+        field.setAccessible(true);
+
+        return ((T) field.get(this));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T extends List<?>> T castList(Object obj) {
         return (T) obj;
     }
 
+    public void addProperty(String name, Object value) {
+        if (name.equals(Defines.Jsonkey.TransactionID.getKey())) {
+            this.setTransactionID(value.toString());
+        } else if (name.equals(Defines.Jsonkey.Currency.getKey())) {
+            this.setCurrency(CurrencyType.getValue(value.toString()));
+        } else if (name.equals(Defines.Jsonkey.Revenue.getKey())) {
+            this.setRevenue(Double.valueOf(value.toString()));
+        } else if (name.equals(Defines.Jsonkey.Shipping.getKey())) {
+            this.setShipping(Double.valueOf(value.toString()));
+        } else if (name.equals(Defines.Jsonkey.Tax.getKey())) {
+            this.setTax(Double.valueOf(value.toString()));
+        } else if (name.equals(Defines.Jsonkey.Coupon.getKey())) {
+            this.setCoupon(value.toString());
+        } else if (name.equals(Defines.Jsonkey.Affiliation.getKey())) {
+            this.setAffiliation(value.toString());
+        } else if (name.equals(Defines.Jsonkey.Description.getKey())) {
+            this.setDescription(value.toString());
+        } else if (name.equals(Defines.Jsonkey.SearchQuery.getKey())) {
+            this.setSearchQuery(value.toString());
+        } else {
+            this.addCustomDataProperty(name, value.toString());
+        }
+    }
+
     public interface BranchIOLogEventListener {
-        void onStateChanged(ServerResponse response, String errorMsg);
+        void onStateChanged(JSONObject response, BranchError error);
     }
 
     /**
@@ -92,7 +109,7 @@ public class BranchIOEvent extends BranchEvent {
         return isReqQueued;
     }
 
-    private class ServerRequestLogEvent extends ServerRequest {
+    protected class ServerRequestLogEvent extends ServerRequest {
         private BranchIOLogEventListener callback;
 
         ServerRequestLogEvent(Context context, String requestPath, BranchIOLogEventListener callback) throws NoSuchFieldException, IllegalAccessException {
@@ -131,12 +148,12 @@ public class BranchIOEvent extends BranchEvent {
 
         @Override
         public void onRequestSucceeded(ServerResponse response, Branch branch) {
-            callback.onStateChanged(response, null);
+            callback.onStateChanged(response.getObject(), null);
         }
 
         @Override
         public void handleFailure(int statusCode, String causeMsg) {
-            callback.onStateChanged(null, causeMsg);
+            callback.onStateChanged(null, new BranchError(causeMsg, 0));
         }
 
         @Override

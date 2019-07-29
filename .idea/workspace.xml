@@ -32,10 +32,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOPageViewEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOPageViewEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOPageViewEvent.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,10 +48,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/definitions.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
+            <state relative-caret-position="297">
               <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
             </state>
           </provider>
@@ -66,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/branch-sdk/dist/build.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="2688" column="23" selection-start-line="2688" selection-start-column="17" selection-end-line="2688" selection-end-column="23" />
+            <state relative-caret-position="203">
+              <caret line="2779" column="5" lean-forward="true" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -124,6 +124,8 @@
       <find>disableTracking</find>
       <find>autoAppIndex</find>
       <find>track</find>
+      <find>pageview</find>
+      <find>track(</find>
     </findStrings>
     <replaceStrings>
       <replace>BranchPluginPlugin</replace>
@@ -182,42 +184,6 @@
             <path>
               <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
               <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="ios" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugin.xcworkspace" type="462c0819:PsiDirectoryNode" />
-              <item name="xcshareddata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="branch-sdk" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="branch-sdk" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="capacitor-branchio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="capacitor-branchio" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -266,7 +232,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="16301000" />
+      <workItem from="1563980758762" duration="18395000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -429,11 +395,18 @@
       <option name="project" value="LOCAL" />
       <updated>1564137980633</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Adding BranchIOEvent classes">
+      <created>1564150331398</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1564150331399</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25477000" />
+    <option name="totallyTimeSpent" value="27571000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
@@ -481,7 +454,8 @@
     <MESSAGE value="Bugfixing" />
     <MESSAGE value="Change method inputs&#10;Push new build" />
     <MESSAGE value="Update java code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update java code" />
+    <MESSAGE value="Adding BranchIOEvent classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding BranchIOEvent classes" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">
@@ -589,13 +563,6 @@
     <entry file="file://$PROJECT_DIR$/ios/Plugin.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/definitions.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@capacitor/core/dist/esm/web/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
@@ -612,8 +579,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/branch-sdk/dist/build.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="2688" column="23" selection-start-line="2688" selection-start-column="17" selection-end-line="2688" selection-end-column="23" />
+        <state relative-caret-position="203">
+          <caret line="2779" column="5" lean-forward="true" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/definitions.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
         </state>
       </provider>
     </entry>

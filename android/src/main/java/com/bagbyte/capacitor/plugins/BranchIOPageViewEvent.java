@@ -1,18 +1,32 @@
 package com.bagbyte.capacitor.plugins;
 
-import org.json.JSONObject;
+import android.content.Context;
 
-import java.util.ArrayList;
+import io.branch.referral.Branch;
 
 public class BranchIOPageViewEvent extends BranchIOEvent {
-    private static final String EVENT_NAME = "View";
+    private static final String EVENT_NAME = "pageview";
 
     /**
      * Constructor.
      */
     public BranchIOPageViewEvent() throws NoSuchFieldException, IllegalAccessException  {
         super(EVENT_NAME);
+    }
 
-        this._isStandardEvent = true;
+    /**
+     * Logs this BranchEvent to Branch for tracking and analytics
+     *
+     * @param context Current context
+     * @return {@code true} if the event is logged to Branch
+     */
+    public boolean logEvent(Context context, BranchIOLogEventListener callback) throws NoSuchFieldException, IllegalAccessException {
+        boolean isReqQueued = false;
+        String reqPath = "v1/pageview";
+        if (Branch.getInstance() != null) {
+            Branch.getInstance().handleNewRequest(new ServerRequestLogEvent(context, reqPath, callback));
+            isReqQueued = true;
+        }
+        return isReqQueued;
     }
 }

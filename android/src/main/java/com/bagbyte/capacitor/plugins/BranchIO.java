@@ -11,17 +11,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.Iterator;
 
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
-import io.branch.referral.util.BranchEvent;
 
 @NativePlugin()
 public class BranchIO extends Plugin {
     private static final String PLUGIN_TAG = "BranchIO";
     private static final Integer DEFAULT_HISTORY_LIST_LENGTH = 100;
+
+    private static final String CONFIG_TEST_MODE = "test";
+    private static final String CONFIG_TRACKING_DISABLED = "tracking_disabled";
+    private static final String CONFIG_VERBOSE = "verbose";
 
     private Boolean testMode = true;
     private Boolean trackingDisabled = false;
@@ -30,7 +33,7 @@ public class BranchIO extends Plugin {
     private Branch branchInstance;
 
     public void load() {
-        this.log("Loading plugin");
+        this.log("Loading " + PLUGIN_TAG + " plugin");
 
         loadConfig();
 
@@ -42,27 +45,27 @@ public class BranchIO extends Plugin {
     }
 
     private void loadConfig() {
-        Object testConfig = getConfigValue("test");
+        Object testConfig = getConfigValue(CONFIG_TEST_MODE);
 
         if (testConfig != null) {
             testMode = ((Boolean) testConfig);
         }
 
-        Object trackingDisabledConfig = getConfigValue("tracking_disabled");
+        Object trackingDisabledConfig = getConfigValue(CONFIG_TRACKING_DISABLED);
 
         if (trackingDisabledConfig != null) {
             trackingDisabled = ((Boolean) trackingDisabledConfig);
         }
 
-        Object verboseConfig = getConfigValue("verbose");
+        Object verboseConfig = getConfigValue(CONFIG_VERBOSE);
 
         if (verboseConfig != null) {
             verbose = ((Boolean) verboseConfig);
         }
 
-        this.log("Test mode: " + testMode);
-        this.log("Tracking disabled: " + trackingDisabled);
-        this.log("Verbose: " + verbose);
+        this.log(CONFIG_TEST_MODE + ": " + testMode);
+        this.log(CONFIG_TRACKING_DISABLED + ": " + trackingDisabled);
+        this.log(CONFIG_VERBOSE + ": " + verbose);
     }
 
     @Override
@@ -217,6 +220,33 @@ public class BranchIO extends Plugin {
         }
     }
 
+    private void updateEventObject(BranchIOEvent event, JSONObject data, JSArray contentItems) {
+        if (data != null) {
+            Iterator<String> keys = data.keys();
+
+            while (keys.hasNext()) {
+                String key = keys.next();
+
+                try {
+                    event.addProperty(key, data.get(key));
+                } catch (JSONException e) {
+                    log("logCustomEvent - error while trying to extract '" + key + "' from data. " + e.getLocalizedMessage());
+                }
+            }
+        }
+
+        if (contentItems != null) {
+            for (int i = 0; i < contentItems.length(); ++i) {
+                try {
+                    event.addContentItems(BranchUniversalObject.createInstance(contentItems.getJSONObject(i)));
+                } catch (JSONException e) {
+                    log("logCustomEvent - error while trying to get content item on position " + i +  ". " + e.getLocalizedMessage());
+                }
+            }
+        }
+
+    }
+
     @PluginMethod()
     public void logCustomEvent(final PluginCall call) {
         this.log("logCustomEvent invoked");
@@ -228,34 +258,43 @@ public class BranchIO extends Plugin {
             return;
         }
 
-        BranchEvent event = new BranchEvent(call.getString("name"));
-
         try {
-            if (call.hasOption("data")) {
-                JSObject data = call.getObject("data");
+            BranchIOEvent event = new BranchIOEvent(call.getString("name"));
 
-                if (data != null && data.names().length() > 0) {
-                    for (int i = 0; i < data.names().length(); i++) {
-                        event.addCustomDataProperty(data.names().getString(i), data.get(data.names().getString(i)).toString());
-                    }
+            this.updateEventObject(event, call.getObject("data"), call.getArray("content_items"));
+
+            BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
+                @Override
+                public void onStateChanged(JSONObject response, BranchError error) {
+                    callback("logCustomEvent", call, response, error);
                 }
-            }
+            };
 
-            if (call.hasOption("contentItems")) {
-                JSArray data = call.getArray("contentItems");
-
-                if (data != null && data.length() > 0) {
-                    List<BranchUniversalObject> contentItems = data.toList();
-
-                    event.addContentItems(contentItems);
-                }
-            }
-        } catch (JSONException e) {
+            event.logEvent(this.getContext(), callback);
+        } catch (Exception e) {
             call.reject(e.getLocalizedMessage(), e);
         }
+    }
 
-        event.logEvent(this.getContext());
+    @PluginMethod()
+    public void trackPageview(final PluginCall call) {
+        this.log("trackPageview invoked");
 
-        call.success();
+        try {
+            BranchIOPageViewEvent event = new BranchIOPageViewEvent();
+
+            this.updateEventObject(event, call.getObject("data"), call.getArray("content_items"));
+
+            BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
+                @Override
+                public void onStateChanged(JSONObject response, BranchError error) {
+                    callback("trackPageview", call, response, error);
+                }
+            };
+
+            event.logEvent(this.getContext(), callback);
+        } catch (Exception e) {
+            call.reject(e.getLocalizedMessage(), e);
+        }
     }
 }
