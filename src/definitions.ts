@@ -15,14 +15,6 @@ export interface InitOptions {
   tracking_disabled?: boolean;
 }
 
-export interface AppIndexOptions {
-  iosAppId?: string;
-  iosURL?: string,
-  androidPackageName?: string;
-  androidURL?: string;
-  data?: { [key: string]: any };
-}
-
 export interface CreditHistoryOptions {
   length?: number;
   begin_after_id?: string;
@@ -32,7 +24,6 @@ export interface CreditHistoryOptions {
 export interface BranchPlugin {
   // General
   init(options: { key: string, options?: InitOptions }): Promise<any>;
-  autoAppIndex(options: { options: AppIndexOptions }): Promise<any>;
   disableTracking(options: { value: boolean }): Promise<any>;
 
   // Track users
@@ -44,5 +35,6 @@ export interface BranchPlugin {
   creditHistory(options: { options?: CreditHistoryOptions }): Promise<any>;
 
   // Events
-  logCustomEvent(options: { name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[]}): Promise<void>;
+  trackPageView(options: { data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void>;
+  logEvent(options: { name: string, data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void>;
 }

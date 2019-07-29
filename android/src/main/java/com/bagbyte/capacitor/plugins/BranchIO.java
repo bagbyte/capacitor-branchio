@@ -114,20 +114,15 @@ public class BranchIO extends Plugin {
     }
 
     @PluginMethod()
-    public void autoAppIndex(final PluginCall call) {
-        this.log("autoAppIndex method not implemented");
-
-        call.success();
-    }
-
-    @PluginMethod()
     public void disableTracking(final PluginCall call) {
-        this.log("disableTracking invoked");
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         if (!call.hasOption("value")) {
-            this.log("disableTracking - no value found");
+            this.log(methodName + " - no value found");
 
-            call.reject("No value specified for disableTracking");
+            call.reject("No value specified for " + methodName);
             return;
         }
 
@@ -138,12 +133,14 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void setIdentity(final PluginCall call) {
-        this.log("setIdentity invoked");
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         if (!call.hasOption("id")) {
-            this.log("setIdentity - no id found");
+            this.log(methodName + " - no id found");
 
-            call.reject("No id specified for setIdentity");
+            call.reject("No id specified for " + methodName);
             return;
         }
 
@@ -159,24 +156,28 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void logout(final PluginCall call) {
-        this.log("logout invoked");
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         branchInstance.logout(new Branch.LogoutStatusListener() {
             @Override
             public void onLogoutFinished(boolean loggedOut, BranchError error) {
-                callback("logout", call, loggedOut, error);
+                callback(methodName, call, loggedOut, error);
             }
         });
     }
 
     @PluginMethod()
     public void redeemRewards(final PluginCall call) {
-        this.log("redeemRewards invoked");
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         if (!call.hasOption("amount")) {
-            this.log("redeemRewards - no amount found");
+            this.log(methodName + " - no amount found");
 
-            call.reject("No amount specified for redeemRewards");
+            call.reject("No amount specified for " + methodName);
             return;
         }
 
@@ -185,7 +186,7 @@ public class BranchIO extends Plugin {
         Branch.BranchReferralStateChangedListener callback = new Branch.BranchReferralStateChangedListener() {
             @Override
             public void onStateChanged(boolean changed, BranchError error) {
-                callback("redeemRewards", call, changed, error);
+                callback(methodName, call, changed, error);
             }
         };
 
@@ -198,12 +199,14 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void creditHistory(final PluginCall call) {
-        this.log("creditHistory invoked");
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         Branch.BranchListResponseListener callback = new Branch.BranchListResponseListener() {
             @Override
             public void onReceivingResponse(JSONArray list, BranchError error) {
-                callback("creditHistory", call, list, error);
+                callback(methodName, call, list, error);
             }
         };
 
@@ -220,7 +223,7 @@ public class BranchIO extends Plugin {
         }
     }
 
-    private void updateEventObject(BranchIOEvent event, JSONObject data, JSArray contentItems) {
+    private void updateEventObject(String methodName, BranchIOEvent event, JSONObject data, JSArray contentItems) {
         if (data != null) {
             Iterator<String> keys = data.keys();
 
@@ -230,7 +233,7 @@ public class BranchIO extends Plugin {
                 try {
                     event.addProperty(key, data.get(key));
                 } catch (JSONException e) {
-                    log("logCustomEvent - error while trying to extract '" + key + "' from data. " + e.getLocalizedMessage());
+                    log(methodName + " - error while trying to extract '" + key + "' from data. " + e.getLocalizedMessage());
                 }
             }
         }
@@ -240,7 +243,7 @@ public class BranchIO extends Plugin {
                 try {
                     event.addContentItems(BranchUniversalObject.createInstance(contentItems.getJSONObject(i)));
                 } catch (JSONException e) {
-                    log("logCustomEvent - error while trying to get content item on position " + i +  ". " + e.getLocalizedMessage());
+                    log(methodName + " - error while trying to get content item on position " + i +  ". " + e.getLocalizedMessage());
                 }
             }
         }
@@ -248,25 +251,27 @@ public class BranchIO extends Plugin {
     }
 
     @PluginMethod()
-    public void logCustomEvent(final PluginCall call) {
-        this.log("logCustomEvent invoked");
+    public void logEvent(final PluginCall call) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         if (!call.hasOption("name")) {
-            this.log("logCustomEvent - no name found");
+            this.log(methodName + " - no name found");
 
-            call.reject("No event name specified for logCustomEvent");
+            call.reject("No event name specified for " + methodName);
             return;
         }
 
         try {
             BranchIOEvent event = new BranchIOEvent(call.getString("name"));
 
-            this.updateEventObject(event, call.getObject("data"), call.getArray("content_items"));
+            this.updateEventObject(methodName, event, call.getObject("data"), call.getArray("content_items"));
 
             BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
                 @Override
                 public void onStateChanged(JSONObject response, BranchError error) {
-                    callback("logCustomEvent", call, response, error);
+                    callback(methodName, call, response, error);
                 }
             };
 
@@ -277,18 +282,20 @@ public class BranchIO extends Plugin {
     }
 
     @PluginMethod()
-    public void trackPageview(final PluginCall call) {
-        this.log("trackPageview invoked");
+    public void trackPageView(final PluginCall call) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        this.log(methodName + " invoked");
 
         try {
             BranchIOPageViewEvent event = new BranchIOPageViewEvent();
 
-            this.updateEventObject(event, call.getObject("data"), call.getArray("content_items"));
+            this.updateEventObject(methodName, event, call.getObject("data"), call.getArray("content_items"));
 
             BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
                 @Override
                 public void onStateChanged(JSONObject response, BranchError error) {
-                    callback("trackPageview", call, response, error);
+                    callback(methodName, call, response, error);
                 }
             };
 

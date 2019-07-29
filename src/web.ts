@@ -1,7 +1,7 @@
 const branch = require('branch-sdk');
 
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+import { BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
 
 export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   constructor() {
@@ -18,18 +18,6 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   // General
   async init(options: { key: string, options?: InitOptions}): Promise<any> {
     branch.init(options.key, options.options);
-  }
-
-  async autoAppIndex(options: { options: AppIndexOptions }): Promise<any>{
-    return new Promise((resolve, reject) => {
-      branch.autoAppIndex(options.options, (err: any, data: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
   }
 
   async disableTracking(options: { value: boolean }): Promise<void> {
@@ -95,9 +83,14 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   }
 
   // Events
-  async logCustomEvent(options: { name: string, data?: { [key: string]: any }, contentItems?: { [key: string]: any }[] }): Promise<void> {
+  // @ts-ignore
+  async trackPageView(options: { data?: { [key: string]: any }, content_items?: { [key: string]: any }[] }): Promise<void> {
+    return Promise.resolve();
+  }
+
+  async logEvent(options: { name: string, data?: { [key: string]: any }, content_items?: { [key: string]: any }[] }): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.logEvent(options.name, options.data, options.contentItems, (err: any, data: any) => {
+      branch.logEvent(options.name, options.data, options.content_items, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {

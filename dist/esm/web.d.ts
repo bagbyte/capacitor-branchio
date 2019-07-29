@@ -1,14 +1,11 @@
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+import { BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
 export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     constructor();
     load(): Promise<void>;
     init(options: {
         key: string;
         options?: InitOptions;
-    }): Promise<any>;
-    autoAppIndex(options: {
-        options: AppIndexOptions;
     }): Promise<any>;
     disableTracking(options: {
         value: boolean;
@@ -24,12 +21,20 @@ export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     creditHistory(options: {
         options?: CreditHistoryOptions;
     }): Promise<any>;
-    logCustomEvent(options: {
+    trackPageView(options: {
+        data?: {
+            [key: string]: any;
+        };
+        content_items?: {
+            [key: string]: any;
+        }[];
+    }): Promise<void>;
+    logEvent(options: {
         name: string;
         data?: {
             [key: string]: any;
         };
-        contentItems?: {
+        content_items?: {
             [key: string]: any;
         }[];
     }): Promise<void>;

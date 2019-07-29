@@ -72,22 +72,6 @@ var BranchPluginWeb = /** @class */ (function (_super) {
             });
         });
     };
-    BranchPluginWeb.prototype.autoAppIndex = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.autoAppIndex(options.options, function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
-            });
-        });
-    };
     BranchPluginWeb.prototype.disableTracking = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -171,11 +155,19 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         });
     };
     // Events
-    BranchPluginWeb.prototype.logCustomEvent = function (options) {
+    // @ts-ignore
+    BranchPluginWeb.prototype.trackPageView = function (options) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, Promise.resolve()];
+            });
+        });
+    };
+    BranchPluginWeb.prototype.logEvent = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.logEvent(options.name, options.data, options.contentItems, function (err, data) {
+                        branch.logEvent(options.name, options.data, options.content_items, function (err, data) {
                             if (err) {
                                 reject(err);
                             }
