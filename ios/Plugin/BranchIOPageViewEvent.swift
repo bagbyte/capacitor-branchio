@@ -20,7 +20,7 @@ public class BranchIOPageViewEvent: BranchIOEvent {
         let preferenceHelper = BNCPreferenceHelper()
         
         let serverURL: String = String.init(format: "%@/%@", preferenceHelper.branchAPIURL, "v1/pageview")
-
+        
         let request = BranchEventRequest.init(serverURL: URL.init(string: serverURL)!, eventDictionary: eventDictionary as? [AnyHashable: Any] ?? [:], completion: callback)
         return request
     }
