@@ -21,6 +21,38 @@ export interface CreditHistoryOptions {
   bucket?: string;
 }
 
+export interface EventData {
+
+}
+
+export interface ContentItem {
+
+}
+
+export type EventName = 'ADD_TO_CART'
+    | 'ADD_TO_WISHLIST'
+    | 'VIEW_CART'
+    | 'INITIATE_PURCHASE'
+    | 'ADD_PAYMENT_INFO'
+    | 'PURCHASE'
+    | 'SPEND_CREDITS'
+    | 'SEARCH'
+    | 'VIEW_ITEM'
+    | 'VIEW_ITEMS'
+    | 'RATE'
+    | 'SHARE'
+    | 'COMPLETE_REGISTRATION'
+    | 'COMPLETE_TUTORIAL'
+    | 'ACHIEVE_LEVEL'
+    | 'UNLOCK_ACHIEVEMENT'
+    | 'INVITE'
+    | 'LOGIN'
+    | 'RESERVE'
+    | 'SUBSCRIBE'
+    | 'START_TRIAL'
+    | 'CLICK_AD'
+    | 'VIEW_AD'
+
 export interface BranchPlugin {
   // General
   init(options: { key: string, options?: InitOptions }): Promise<any>;
@@ -36,5 +68,5 @@ export interface BranchPlugin {
 
   // Events
   trackPageView(options: { data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void>;
-  logEvent(options: { name: string, data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void>;
+  logEvent(options: { name: EventName, data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void>;
 }
