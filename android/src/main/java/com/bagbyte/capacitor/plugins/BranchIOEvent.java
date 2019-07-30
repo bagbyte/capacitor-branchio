@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
 import java.util.List;
 
 import io.branch.indexing.BranchUniversalObject;
@@ -16,7 +15,6 @@ import io.branch.referral.BranchError;
 import io.branch.referral.Defines;
 import io.branch.referral.ServerRequest;
 import io.branch.referral.ServerResponse;
-import io.branch.referral.util.AdType;
 import io.branch.referral.util.BranchEvent;
 import io.branch.referral.util.CurrencyType;
 
@@ -35,8 +33,6 @@ public class BranchIOEvent extends BranchEvent {
 
         this._eventName = eventName;
         this._isStandardEvent = this.getSuperProperty("isStandardEvent");
-
-        this.setAdType(AdType.NATIVE);
     }
 
     private JSONObject getStandardProperties() throws NoSuchFieldException, IllegalAccessException {
@@ -68,7 +64,7 @@ public class BranchIOEvent extends BranchEvent {
         if (name.equals(Defines.Jsonkey.TransactionID.getKey())) {
             this.setTransactionID(value.toString());
         } else if (name.equals(Defines.Jsonkey.Currency.getKey())) {
-            this.setCurrency(CurrencyType.getValue(value.toString()));
+            this.setCurrency(CurrencyType.getValue(value.toString().toUpperCase()));
         } else if (name.equals(Defines.Jsonkey.Revenue.getKey())) {
             this.setRevenue(Double.valueOf(value.toString()));
         } else if (name.equals(Defines.Jsonkey.Shipping.getKey())) {

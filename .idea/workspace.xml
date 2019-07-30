@@ -32,9 +32,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ios/Plugin/BranchIOPageViewEvent.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/definitions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/web.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/web.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOPageViewEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/bagbyte/capacitor/plugins/BranchIOPageViewEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -59,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/web.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+            <state relative-caret-position="323">
+              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
               <folding>
                 <element signature="e#39#83#0" expanded="true" />
               </folding>
@@ -72,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/node_modules/branch-sdk/dist/build.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="203">
-              <caret line="2779" column="5" lean-forward="true" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
+              <caret line="2779" column="5" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -234,7 +239,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="19122000" />
+      <workItem from="1563980758762" duration="20152000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -411,15 +416,21 @@
       <option name="project" value="LOCAL" />
       <updated>1564424977186</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Changing method name and optimizing Android code">
+      <created>1564425891258</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1564425891258</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28298000" />
+    <option name="totallyTimeSpent" value="29328000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27283654" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -466,7 +477,8 @@
     <MESSAGE value="Update java code" />
     <MESSAGE value="Adding BranchIOEvent classes" />
     <MESSAGE value="Adding new page logging strategy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding new page logging strategy" />
+    <MESSAGE value="Changing method name and optimizing Android code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changing method name and optimizing Android code" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">
@@ -577,7 +589,7 @@
     <entry file="file://$PROJECT_DIR$/node_modules/branch-sdk/dist/build.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
-          <caret line="2779" column="5" lean-forward="true" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
+          <caret line="2779" column="5" selection-start-line="2779" selection-start-column="5" selection-end-line="2779" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -597,8 +609,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/web.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+        <state relative-caret-position="323">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
           <folding>
             <element signature="e#39#83#0" expanded="true" />
           </folding>

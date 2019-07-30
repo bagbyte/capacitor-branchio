@@ -22,9 +22,9 @@ public class BranchIO extends Plugin {
     private static final String PLUGIN_TAG = "BranchIO";
     private static final Integer DEFAULT_HISTORY_LIST_LENGTH = 100;
 
-    private static final String CONFIG_TEST_MODE = "test";
-    private static final String CONFIG_TRACKING_DISABLED = "tracking_disabled";
-    private static final String CONFIG_VERBOSE = "verbose";
+    private static final String CONFIG_KEY_TEST_MODE = "test";
+    private static final String CONFIG_KEY_TRACKING_DISABLED = "tracking_disabled";
+    private static final String CONFIG_KEY_VERBOSE = "verbose";
 
     private Boolean testMode = true;
     private Boolean trackingDisabled = false;
@@ -45,27 +45,27 @@ public class BranchIO extends Plugin {
     }
 
     private void loadConfig() {
-        Object testConfig = getConfigValue(CONFIG_TEST_MODE);
+        Object testConfig = getConfigValue(CONFIG_KEY_TEST_MODE);
 
         if (testConfig != null) {
             testMode = ((Boolean) testConfig);
         }
 
-        Object trackingDisabledConfig = getConfigValue(CONFIG_TRACKING_DISABLED);
+        Object trackingDisabledConfig = getConfigValue(CONFIG_KEY_TRACKING_DISABLED);
 
         if (trackingDisabledConfig != null) {
             trackingDisabled = ((Boolean) trackingDisabledConfig);
         }
 
-        Object verboseConfig = getConfigValue(CONFIG_VERBOSE);
+        Object verboseConfig = getConfigValue(CONFIG_KEY_VERBOSE);
 
         if (verboseConfig != null) {
             verbose = ((Boolean) verboseConfig);
         }
 
-        this.log(CONFIG_TEST_MODE + ": " + testMode);
-        this.log(CONFIG_TRACKING_DISABLED + ": " + trackingDisabled);
-        this.log(CONFIG_VERBOSE + ": " + verbose);
+        this.log("Config " + CONFIG_KEY_TEST_MODE + ": " + testMode);
+        this.log("Config " + CONFIG_KEY_TRACKING_DISABLED + ": " + trackingDisabled);
+        this.log("Config " + CONFIG_KEY_VERBOSE + ": " + verbose);
     }
 
     @Override
@@ -95,87 +95,86 @@ public class BranchIO extends Plugin {
         }
     }
 
-    private void callback(String method, PluginCall call, Object data, BranchError error) {
+    private void handleBranchResult(String method, PluginCall call, Object data, BranchError error) {
         if (error != null) {
-            log(method + " - " + error.getMessage());
+            log(method + " failed - " + error.getMessage());
 
             call.reject(error.getMessage());
-        } else {
-            log(method + " - Succeeded");
-
-            if (data != null) {
-                JSObject result = new JSObject();
-                result.put("result", data);
-                call.success(result);
-            } else {
-                call.success();
-            }
+            return;
         }
+
+        log(method + " succeeded");
+
+        if (data != null) {
+            JSObject result = new JSObject();
+            result.put("result", data);
+            call.success(result);
+        } else {
+            call.success();
+        }
+
     }
 
     @PluginMethod()
     public void disableTracking(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         if (!call.hasOption("value")) {
-            this.log(methodName + " - no value found");
+            this.log(methodName + " - no 'value' found");
 
-            call.reject("No value specified for " + methodName);
+            call.reject("No 'value' specified for " + methodName);
             return;
         }
 
         branchInstance.disableTracking(call.getBoolean("value"));
-
         call.success();
     }
 
     @PluginMethod()
     public void setIdentity(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         if (!call.hasOption("id")) {
-            this.log(methodName + " - no id found");
+            this.log(methodName + " - no 'id' found");
 
-            call.reject("No id specified for " + methodName);
+            call.reject("No 'id' specified for " + methodName);
             return;
         }
-
-        log("setIdentity ID: " + call.getString("id"));
 
         branchInstance.setIdentity(call.getString("id"), new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
-                callback("setIdentity", call, referringParams, error);
+                handleBranchResult(methodName, call, referringParams, error);
             }
         });
     }
 
     @PluginMethod()
     public void logout(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         branchInstance.logout(new Branch.LogoutStatusListener() {
             @Override
             public void onLogoutFinished(boolean loggedOut, BranchError error) {
-                callback(methodName, call, loggedOut, error);
+                handleBranchResult(methodName, call, loggedOut, error);
             }
         });
     }
 
     @PluginMethod()
     public void redeemRewards(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         if (!call.hasOption("amount")) {
-            this.log(methodName + " - no amount found");
+            this.log(methodName + " - no 'amount' found");
 
             call.reject("No amount specified for " + methodName);
             return;
@@ -186,7 +185,7 @@ public class BranchIO extends Plugin {
         Branch.BranchReferralStateChangedListener callback = new Branch.BranchReferralStateChangedListener() {
             @Override
             public void onStateChanged(boolean changed, BranchError error) {
-                callback(methodName, call, changed, error);
+                handleBranchResult(methodName, call, changed, error);
             }
         };
 
@@ -199,14 +198,14 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void creditHistory(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         Branch.BranchListResponseListener callback = new Branch.BranchListResponseListener() {
             @Override
             public void onReceivingResponse(JSONArray list, BranchError error) {
-                callback(methodName, call, list, error);
+                handleBranchResult(methodName, call, list, error);
             }
         };
 
@@ -252,26 +251,26 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void logEvent(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
         if (!call.hasOption("name")) {
-            this.log(methodName + " - no name found");
+            this.log(methodName + " - no 'name' found");
 
             call.reject("No event name specified for " + methodName);
             return;
         }
 
         try {
-            BranchIOEvent event = new BranchIOEvent(call.getString("name"));
+            BranchIOEvent event = new BranchIOEvent(call.getString("name").toUpperCase());
 
             this.updateEventObject(methodName, event, call.getObject("data"), call.getArray("content_items"));
 
             BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
                 @Override
                 public void onStateChanged(JSONObject response, BranchError error) {
-                    callback(methodName, call, response, error);
+                    handleBranchResult(methodName, call, response, error);
                 }
             };
 
@@ -283,7 +282,7 @@ public class BranchIO extends Plugin {
 
     @PluginMethod()
     public void trackPageView(final PluginCall call) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
@@ -295,7 +294,7 @@ public class BranchIO extends Plugin {
             BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
                 @Override
                 public void onStateChanged(JSONObject response, BranchError error) {
-                    callback(methodName, call, response, error);
+                    handleBranchResult(methodName, call, response, error);
                 }
             };
 

@@ -2,27 +2,35 @@ import Foundation
 import Capacitor
 import Branch
 
+typealias BranchGenericCallback = (Any?, Error?) -> ();
+
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitor.ionicframework.com/docs/plugins/ios
  */
 @objc(BranchIO)
 public class BranchIO: CAPPlugin {
+    let pluginTag = "BranchIO"
     let defaultHistoryListLenght = 100
+    
+    let configKeyTestMode = "test"
+    let configTrackingDisabled = "tracking_disabled"
+    let configVerbose = "verbose"
 
     var testMode = true
     var trackingDisabled = false
     var verbose = false
 
+    // Plugin setup
     public override func load() {
-        testMode = getConfigValue("test") as? Bool ?? testMode
-        trackingDisabled = getConfigValue("tracking_disabled") as? Bool ?? trackingDisabled
-        verbose = getConfigValue("verbose") as? Bool ?? verbose
+        testMode = getConfigValue(configKeyTestMode) as? Bool ?? testMode
+        trackingDisabled = getConfigValue(configTrackingDisabled) as? Bool ?? trackingDisabled
+        verbose = getConfigValue(configVerbose) as? Bool ?? verbose
 
-        self.log("Loading plugin")
-        self.log("Test mode: \(testMode)")
-        self.log("Tracking disabled: \(trackingDisabled)")
-        self.log("Verbose: \(verbose)")
+        log("Loading \(pluginTag) plugin")
+        log("Config \(configKeyTestMode): \(testMode)")
+        log("Config \(configTrackingDisabled): \(trackingDisabled)")
+        log("Config \(configVerbose): \(verbose)")
 
         Branch.setUseTestBranchKey(testMode)
         Branch.setTrackingDisabled(trackingDisabled)
@@ -36,14 +44,9 @@ public class BranchIO: CAPPlugin {
         NotificationCenter.default.addObserver(self, selector: #selector(handleContinueActivity(_ :)), name: Notification.Name(CAPNotifications.ContinueActivity.name()), object: nil);
     }
 
-    private func log(_ message: String) {
-        if (verbose) {
-            print("BranchIO - \(message)")
-        }
-    }
-
+    // iOS events handling
     @objc func handleDidFinishLaunching(_ notification: NSNotification) {
-        self.log("handleDidFinishLaunching invoked")
+        log("\(#function) invoked")
 
         if let userInfo = notification.userInfo as? Dictionary<String,Any> {
             if let launchOptions = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
@@ -55,35 +58,35 @@ public class BranchIO: CAPPlugin {
     }
 
     @objc func handleOpenUrl(_ notification: Notification) {
-        self.log("handleOpenUrl invoked")
+        log("\(#function) invoked")
 
         guard let object = notification.object as? [String: Any] else {
-            self.log("handleOpenUrl - no object found");
+            log("\(#function) - no 'object' found");
             return;
         }
 
         guard let url = object["url"] as? URL else {
-            self.log("handleOpenUrl - no url found");
+            log("\(#function) - no 'url' found");
             return;
         }
 
         guard let options = object["options"] as? [UIApplication.OpenURLOptionsKey : Any] else {
-            self.log("handleOpenUrl - no options found");
+            log("\(#function) - no 'options' found");
             return;
         }
 
-        self.log("handleOpenUrl - invoked with object \(object)")
-        self.log("handleOpenUrl - invoked with url \(url)")
-        self.log("handleOpenUrl - invoked with options \(options)")
+        log("\(#function) - invoked with 'object' \(object)")
+        log("\(#function) - invoked with 'url' \(url)")
+        log("\(#function) - invoked with 'options' \(options)")
 
         Branch.getInstance().application(UIApplication.shared, open: url, options: options)
     }
 
     @objc func handleContinueActivity(_ notification: NSNotification) {
-        self.log("handleContinueActivity invoked")
+        log("\(#function) invoked")
 
         guard let userActivity = notification.object as? NSUserActivity else {
-            self.log("handleContinueActivity - no object found");
+            log("\(#function) - no 'object' found");
             return;
         }
 
@@ -91,29 +94,56 @@ public class BranchIO: CAPPlugin {
     }
 
     @objc func handleDidReceiveRemoteNotification(_ notification: NSNotification) {
-        self.log("handleDidReceiveRemoteNotification invoked")
+        log("\(#function) invoked")
 
         guard let userInfo = notification.object as? [AnyHashable : Any] else {
-            self.log("handleDidReceiveRemoteNotification - no object found");
+            log("\(#function) - no 'object' found");
             return;
         }
 
         Branch.getInstance().handlePushNotification(userInfo)
     }
-
-    @objc func autoAppIndex(_ call: CAPPluginCall) {
-        self.log("autoAppIndex invoked")
-
-        call.success()
+    
+    // Private methods
+    private func log(_ message: String) {
+        if (verbose) {
+            print("\(pluginTag) - \(message)")
+        }
+    }
+    
+    private func branchCallback(_ call: CAPPluginCall, method: String = #function) -> BranchGenericCallback {
+        return { (data: Any?, error: Error?) in
+            self.handleBranchResult(method: method, call: call, data: data, error: error);
+        }
     }
 
+    private func handleBranchResult(method: String, call: CAPPluginCall, data: Any?, error: Error?) {
+        if let error = error {
+            log("\(method) failed - \(error.localizedDescription)")
+            
+            call.reject(error.localizedDescription)
+            return
+        }
+        
+        log("\(method) succeeded")
+        
+        if let data = data {
+            call.success(["result" : data])
+        } else {
+            call.success()
+        }
+    }
+    
+    // Plugin methods
     @objc func disableTracking(_ call: CAPPluginCall) {
-        self.log("disableTracking invoked")
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
         guard let value = call.getBool("value") else {
-            self.log("disableTracking - no value found")
+            log("\(methodName) - no 'value' found")
 
-            call.error("No value specified for disableTracking")
+            call.error("No 'value' specified for \(methodName)")
             return;
         }
 
@@ -122,113 +152,136 @@ public class BranchIO: CAPPlugin {
     }
 
     @objc func setIdentity(_ call: CAPPluginCall) {
-        self.log("setIdentity invoked")
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
         guard let id = call.getString("id") else {
-            self.log("setIdentity - no id found")
+            log("\(methodName) - no 'id' found")
 
-            call.error("No user id specified")
+            call.error("No 'id' specified")
             return;
         }
-
-        Branch.getInstance().setIdentity(id)
-        call.success()
+        
+        Branch.getInstance()?.setIdentity(id, withCallback: branchCallback(call))
     }
 
     @objc func logout(_ call: CAPPluginCall) {
-        self.log("logout invoked")
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
-        Branch.getInstance().logout()
-        call.success()
+        Branch.getInstance()?.logout(callback: branchCallback(call))
     }
 
     @objc func redeemRewards(_ call: CAPPluginCall) {
-        self.log("redeemRewards invoked")
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
         guard let amount = call.getInt("amount") else {
-            self.log("redeemRewards - no amount found")
+            log("\(methodName) - no 'amount' found")
 
-            call.error("No amount specified for redeemRewards")
+            call.error("No 'amount' specified for \(methodName)")
             return;
         }
 
-        let callback: callbackWithStatus = {(changed, error) in
-            if (error != nil) {
-                self.log("redeemRewards - \(error!.localizedDescription)")
-
-                call.error(error!.localizedDescription)
-                return;
-            }
-
-            call.success(["changed": changed])
-        }
-
         if let bucket = call.getString("bucket") {
-            Branch.getInstance().redeemRewards(amount, forBucket: bucket, callback: callback)
+            Branch.getInstance().redeemRewards(amount, forBucket: bucket, callback: branchCallback(call))
         } else {
-            Branch.getInstance().redeemRewards(amount, callback: callback)
+            Branch.getInstance().redeemRewards(amount, callback: branchCallback(call))
         }
     }
 
     @objc func creditHistory(_ call: CAPPluginCall) {
-        self.log("creditHistory invoked")
-
-        let callback: callbackWithList = {(creditHistory, error) in
-            if (error != nil) {
-                self.log("creditHistory - \(error!.localizedDescription)")
-
-                call.error(error!.localizedDescription)
-                return;
-            }
-
-            call.success(["list": creditHistory ?? {}])
-        }
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
         if let options = call.getObject("options") {
             if let bucket = options["bucket"] as? String {
                 if let after = options["begin_after_id"] as? String {
-                    Branch.getInstance().getCreditHistory(forBucket: bucket, after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: callback)
+                    Branch.getInstance().getCreditHistory(forBucket: bucket, after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(call))
                 } else {
-                    Branch.getInstance().getCreditHistory(forBucket: bucket, andCallback: callback)
+                    Branch.getInstance().getCreditHistory(forBucket: bucket, andCallback: branchCallback(call))
                 }
             } else {
                 if let after = options["begin_after_id"] as? String {
-                    Branch.getInstance().getCreditHistory(after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: callback)
+                    Branch.getInstance().getCreditHistory(after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(call))
                 } else {
-                    Branch.getInstance().getCreditHistory(callback: callback)
+                    Branch.getInstance().getCreditHistory(callback: branchCallback(call))
                 }
             }
         } else {
-            Branch.getInstance().getCreditHistory(callback: callback)
+            Branch.getInstance().getCreditHistory(callback: branchCallback(call))
+        }
+    }
+    
+    private func updateEventObject(event: BranchEvent, data: Dictionary<String,Any>?, contentItems: Array<Dictionary<String,Any>>?, method: String = #function) {
+        event.adType = .none
+        
+        if let data = data {
+            for (key, value) in data {
+                switch key {
+                case "transaction_id":
+                    event.transactionID = (value as! String);
+                case "currency":
+                    event.currency = BNCCurrency.init(rawValue: (value as! String).uppercased());
+                case "revenue":
+                    event.revenue = (value as! NSDecimalNumber);
+                case "shipping":
+                    event.shipping = (value as! NSDecimalNumber);
+                case "tax":
+                    event.tax = (value as! NSDecimalNumber);
+                case "coupon":
+                    event.coupon = (value as! String);
+                case "affiliation":
+                    event.affiliation = (value as! String);
+                case "description":
+                    event.eventDescription = (value as! String);
+                case "search_query":
+                    event.searchQuery = (value as! String);
+                default:
+                    event.customData.setValue(value as! String, forKey: key)
+                }
+            }
+        }
+        
+        if let contentItems = contentItems {
+            for contentItem in contentItems {
+                event.contentItems.add(BranchUniversalObject(dictionary: contentItem))
+            }
         }
     }
 
-    @objc func logCustomEvent(_ call: CAPPluginCall) {
-        self.log("logCustomEvent invoked")
+    @objc func logEvent(_ call: CAPPluginCall) {
+        let methodName = #function
+        
+        log("\(methodName) invoked")
 
         guard let name = call.getString("name") else {
-            self.log("logCustomEvent - no name found")
+            log("\(methodName) - no 'name' found")
 
-            call.error("No event name specified for logEvent")
+            call.error("No 'name' specified for \(methodName)")
             return;
         }
 
-        let event = BranchEvent.customEvent(withName: name)
-
-        if let data = call.getObject("data") {
-            for (key, value) in data {
-                event.customData[key] = value
-            }
-        }
-/*
-        if let contentItems = call.getArray("contentItems", [String:Any].self) {
-            for contentItem in contentItems {
-                let branchUniversalObject = BranchUniversalObject.init()
-
-            }
-        }
-*/
-        event.logEvent()
-        call.success()
+        let event = BranchIOEvent(name: name.uppercased())
+        
+        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
+        
+        event.logEventWithCallback(callback: branchCallback(call))
+    }
+    
+    @objc func trackPageView(_ call: CAPPluginCall) {
+        let methodName = #function
+        
+        log("\(methodName) invoked")
+        
+        let event = BranchIOPageViewEvent(name: "PAGE_VIEW")
+        
+        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
+        
+        event.logEventWithCallback(callback: branchCallback(call))
     }
 }
