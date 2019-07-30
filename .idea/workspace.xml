@@ -32,10 +32,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ios/Plugin/BranchIOEvent.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Plugin/BranchIOPageViewEvent.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/BranchIOPageViewEvent.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/definitions.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -247,7 +245,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="21680000" />
+      <workItem from="1563980758762" duration="22949000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -438,16 +436,30 @@
       <option name="project" value="LOCAL" />
       <updated>1564446562397</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Bugfixing">
+      <created>1564470636252</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1564470636266</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Bugfixing">
+      <created>1564483462043</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1564483462043</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30856000" />
+    <option name="totallyTimeSpent" value="32125000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="882" height="835" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27283654" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27283654" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -461,7 +473,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="TeamCity" order="10" weight="0.32974428" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.28532976" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.28532976" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -487,14 +499,14 @@
     <MESSAGE value="Adding .gitignore" />
     <MESSAGE value="All methods created" />
     <MESSAGE value="Updating code with new initialization" />
-    <MESSAGE value="Bugfixing" />
     <MESSAGE value="Change method inputs&#10;Push new build" />
     <MESSAGE value="Update java code" />
     <MESSAGE value="Adding BranchIOEvent classes" />
     <MESSAGE value="Adding new page logging strategy" />
     <MESSAGE value="Changing method name and optimizing Android code" />
     <MESSAGE value="Added iOS code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added iOS code" />
+    <MESSAGE value="Bugfixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfixing" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">

@@ -242,7 +242,7 @@ public class BranchIO: CAPPlugin {
                 case "search_query":
                     event.searchQuery = (value as! String);
                 default:
-                    event.customData.setValue(value as! String, forKey: key)
+                    event.customData.setValue("\(value)", forKey: key)
                 }
             }
         }
