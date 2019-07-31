@@ -12,33 +12,33 @@ typealias BranchEventRequestCallback = ([AnyHashable: Any]?, Error?) -> ();
 
 public class BranchIOEvent: BranchEvent {
     var _eventName: String
-    /*
-     let standardEvents: Array<BranchStandardEvent> = [
-     .addToCart,
-     .addToWishlist,
-     .viewCart,
-     .initiatePurchase,
-     .addPaymentInfo,
-     .purchase,
-     .spendCredits,
-     .search,
-     .viewItem,
-     .viewItems,
-     .rate,
-     .share,
-     .completeRegistration,
-     .completeTutorial,
-     .achieveLevel,
-     .unlockAchievement,
-     .invite,
-     .login,
-     .reserve,
-     .subscribe,
-     .startTrial,
-     .clickAd,
-     .viewAd,
+    
+     let standardEvents: Array<String> = [
+         BranchStandardEvent.addToCart.rawValue,
+         BranchStandardEvent.addToWishlist.rawValue,
+         BranchStandardEvent.viewCart.rawValue,
+         BranchStandardEvent.initiatePurchase.rawValue,
+         BranchStandardEvent.addPaymentInfo.rawValue,
+         BranchStandardEvent.purchase.rawValue,
+         BranchStandardEvent.spendCredits.rawValue,
+         BranchStandardEvent.search.rawValue,
+         BranchStandardEvent.viewItem.rawValue,
+         BranchStandardEvent.viewItems.rawValue,
+         BranchStandardEvent.rate.rawValue,
+         BranchStandardEvent.share.rawValue,
+         BranchStandardEvent.completeRegistration.rawValue,
+         BranchStandardEvent.completeTutorial.rawValue,
+         BranchStandardEvent.achieveLevel.rawValue,
+         BranchStandardEvent.unlockAchievement.rawValue,
+         BranchStandardEvent.invite.rawValue,
+         BranchStandardEvent.login.rawValue,
+         BranchStandardEvent.reserve.rawValue,
+         BranchStandardEvent.subscribe.rawValue,
+         BranchStandardEvent.startTrial.rawValue,
+         BranchStandardEvent.clickAd.rawValue,
+         BranchStandardEvent.viewAd.rawValue,
      ]
-     */
+    
     public override init(name: String) {
         self._eventName = name;
         super.init(name: name)
@@ -83,8 +83,7 @@ public class BranchIOEvent: BranchEvent {
     func buildRequest(_ eventDictionary: NSDictionary, _ callback: BranchEventRequestCallback?) -> BranchEventRequest {
         let preferenceHelper = BNCPreferenceHelper()
         
-        let standardEvent: BranchStandardEvent? = BranchStandardEvent(rawValue: _eventName)
-        let serverURL: String = (standardEvent != nil)
+        let serverURL: String = standardEvents.contains(_eventName)
             ? String.init(format: "%@/%@", preferenceHelper.branchAPIURL, "v2/event/standard")
             : String.init(format: "%@/%@", preferenceHelper.branchAPIURL, "v2/event/custom")
         
