@@ -16,6 +16,7 @@ import java.util.Iterator;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
+import io.branch.referral.util.BRANCH_STANDARD_EVENT;
 
 @NativePlugin()
 public class BranchIO extends Plugin {
@@ -249,21 +250,9 @@ public class BranchIO extends Plugin {
 
     }
 
-    @PluginMethod()
-    public void logEvent(final PluginCall call) {
-        final String methodName = call.getMethodName();
-
-        this.log(methodName + " invoked");
-
-        if (!call.hasOption("name")) {
-            this.log(methodName + " - no 'name' found");
-
-            call.reject("No event name specified for " + methodName);
-            return;
-        }
-
+    private void logEvent(final String methodName, final String eventName, final PluginCall call) {
         try {
-            BranchIOEvent event = new BranchIOEvent(call.getString("name").toUpperCase());
+            BranchIOEvent event = new BranchIOEvent(eventName);
 
             this.updateEventObject(methodName, event, call.getObject("data"), call.getArray("content_items"));
 
@@ -281,26 +270,27 @@ public class BranchIO extends Plugin {
     }
 
     @PluginMethod()
+    public void logEvent(final PluginCall call) {
+        final String methodName = call.getMethodName();
+
+        this.log(methodName + " invoked");
+
+        if (!call.hasOption("name")) {
+            this.log(methodName + " - no 'name' found");
+
+            call.reject("No event name specified for " + methodName);
+            return;
+        }
+
+        logEvent(methodName, call.getString("name").toUpperCase(), call);
+    }
+
+    @PluginMethod()
     public void trackPageView(final PluginCall call) {
         final String methodName = call.getMethodName();
 
         this.log(methodName + " invoked");
 
-        try {
-            BranchIOPageViewEvent event = new BranchIOPageViewEvent();
-
-            this.updateEventObject(methodName, event, call.getObject("data"), call.getArray("content_items"));
-
-            BranchIOEvent.BranchIOLogEventListener callback = new BranchIOEvent.BranchIOLogEventListener() {
-                @Override
-                public void onStateChanged(JSONObject response, BranchError error) {
-                    handleBranchResult(methodName, call, response, error);
-                }
-            };
-
-            event.logEvent(this.getContext(), callback);
-        } catch (Exception e) {
-            call.reject(e.getLocalizedMessage(), e);
-        }
+        logEvent(methodName, BRANCH_STANDARD_EVENT.VIEW_ITEM.getName(), call);
     }
 }
