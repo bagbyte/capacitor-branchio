@@ -254,6 +254,14 @@ public class BranchIO: CAPPlugin {
         }
     }
     
+    private func logEvent(eventName: String, call: CAPPluginCall, methodName: String = #function) {
+        let event = BranchIOEvent(name: eventName)
+        
+        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
+        
+        event.logEventWithCallback(callback: branchCallback(call))
+    }
+    
     @objc func logEvent(_ call: CAPPluginCall) {
         let methodName = #function
         
@@ -266,11 +274,7 @@ public class BranchIO: CAPPlugin {
             return;
         }
         
-        let event = BranchIOEvent(name: name.uppercased())
-        
-        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
-        
-        event.logEventWithCallback(callback: branchCallback(call))
+        logEvent(eventName: name.uppercased(), call: call)
     }
     
     @objc func trackPageView(_ call: CAPPluginCall) {
@@ -278,10 +282,6 @@ public class BranchIO: CAPPlugin {
         
         log("\(methodName) invoked")
         
-        let event = BranchIOPageViewEvent(name: "PAGE_VIEW")
-        
-        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
-        
-        event.logEventWithCallback(callback: branchCallback(call))
+        logEvent(eventName: BranchStandardEvent.viewItem.rawValue, call: call)
     }
 }

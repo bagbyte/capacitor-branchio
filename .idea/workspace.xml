@@ -33,7 +33,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/BranchIOPageViewEvent.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -245,7 +247,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="24885000" />
+      <workItem from="1563980758762" duration="24886000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -468,7 +470,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34061000" />
+    <option name="totallyTimeSpent" value="34062000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2377" height="1375" extended-state="0" />
