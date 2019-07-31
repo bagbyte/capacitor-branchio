@@ -33,8 +33,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c0520c5e-1b9e-4ab6-bf3a-1d9968614408" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Plugin/BranchIOPageViewEvent.swift" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Plugin/Plugin.swift" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -247,7 +245,7 @@
       <option name="presentableId" value="Default" />
       <updated>1563958902884</updated>
       <workItem from="1563958904403" duration="9176000" />
-      <workItem from="1563980758762" duration="24886000" />
+      <workItem from="1563980758762" duration="25773000" />
     </task>
     <task id="LOCAL-00001" summary="First web version for the plugin">
       <created>1563964141982</created>
@@ -466,16 +464,30 @@
       <option name="project" value="LOCAL" />
       <updated>1564489290518</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Updating trackPageView method">
+      <created>1564584986820</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1564584986820</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Polishing code">
+      <created>1564587018424</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1564587018425</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34062000" />
+    <option name="totallyTimeSpent" value="34949000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="2377" height="1375" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.097508594" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.097508594" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -489,7 +501,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="TeamCity" order="10" weight="0.32974428" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.16523772" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.16523772" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -522,7 +534,9 @@
     <MESSAGE value="Changing method name and optimizing Android code" />
     <MESSAGE value="Added iOS code" />
     <MESSAGE value="Bugfixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfixing" />
+    <MESSAGE value="Updating trackPageView method" />
+    <MESSAGE value="Polishing code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Polishing code" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/index.ts">

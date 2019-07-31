@@ -111,7 +111,7 @@ public class BranchIO: CAPPlugin {
         }
     }
     
-    private func branchCallback(method: String, call: CAPPluginCall) -> BranchGenericCallback {
+    private func branchCallback(_ call: CAPPluginCall, method: String = #function) -> BranchGenericCallback {
         return { (data: Any?, error: Error?) in
             self.handleBranchResult(method: method, call: call, data: data, error: error);
         }
@@ -163,7 +163,7 @@ public class BranchIO: CAPPlugin {
             return;
         }
         
-        Branch.getInstance()?.setIdentity(id, withCallback: branchCallback(method: methodName, call: call))
+        Branch.getInstance()?.setIdentity(id, withCallback: branchCallback(call))
     }
     
     @objc func logout(_ call: CAPPluginCall) {
@@ -171,7 +171,7 @@ public class BranchIO: CAPPlugin {
         
         log("\(methodName) invoked")
         
-        Branch.getInstance()?.logout(callback: branchCallback(method: methodName, call: call))
+        Branch.getInstance()?.logout(callback: branchCallback(call))
     }
     
     @objc func redeemRewards(_ call: CAPPluginCall) {
@@ -187,9 +187,9 @@ public class BranchIO: CAPPlugin {
         }
         
         if let bucket = call.getString("bucket") {
-            Branch.getInstance().redeemRewards(amount, forBucket: bucket, callback: branchCallback(method: methodName, call: call))
+            Branch.getInstance().redeemRewards(amount, forBucket: bucket, callback: branchCallback(call))
         } else {
-            Branch.getInstance().redeemRewards(amount, callback: branchCallback(method: methodName, call: call))
+            Branch.getInstance().redeemRewards(amount, callback: branchCallback(call))
         }
     }
     
@@ -201,23 +201,23 @@ public class BranchIO: CAPPlugin {
         if let options = call.getObject("options") {
             if let bucket = options["bucket"] as? String {
                 if let after = options["begin_after_id"] as? String {
-                    Branch.getInstance().getCreditHistory(forBucket: bucket, after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(method: methodName, call: call))
+                    Branch.getInstance().getCreditHistory(forBucket: bucket, after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(call))
                 } else {
-                    Branch.getInstance().getCreditHistory(forBucket: bucket, andCallback: branchCallback(method: methodName, call: call))
+                    Branch.getInstance().getCreditHistory(forBucket: bucket, andCallback: branchCallback(call))
                 }
             } else {
                 if let after = options["begin_after_id"] as? String {
-                    Branch.getInstance().getCreditHistory(after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(method: methodName, call: call))
+                    Branch.getInstance().getCreditHistory(after: after, number: options["length"] as? Int ?? defaultHistoryListLenght, order: .mostRecentFirst, andCallback: branchCallback(call))
                 } else {
-                    Branch.getInstance().getCreditHistory(callback: branchCallback(method: methodName, call: call))
+                    Branch.getInstance().getCreditHistory(callback: branchCallback(call))
                 }
             }
         } else {
-            Branch.getInstance().getCreditHistory(callback: branchCallback(method: methodName, call: call))
+            Branch.getInstance().getCreditHistory(callback: branchCallback(call))
         }
     }
     
-    private func updateEventObject(method: String, event: BranchEvent, data: Dictionary<String,Any>?, contentItems: Array<Dictionary<String,Any>>?) {
+    private func updateEventObject(event: BranchEvent, data: Dictionary<String,Any>?, contentItems: Array<Dictionary<String,Any>>?, method: String = #function) {
         event.adType = .none
         
         if let data = data {
@@ -254,12 +254,12 @@ public class BranchIO: CAPPlugin {
         }
     }
     
-    private func logEvent(method: String, eventName: String, call: CAPPluginCall) {
+    private func logEvent(eventName: String, call: CAPPluginCall, methodName: String = #function) {
         let event = BranchIOEvent(name: eventName)
         
-        updateEventObject(method: method, event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
+        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
         
-        event.logEventWithCallback(callback: branchCallback(method: method, call: call))
+        event.logEventWithCallback(callback: branchCallback(call))
     }
     
     @objc func logEvent(_ call: CAPPluginCall) {
@@ -274,7 +274,7 @@ public class BranchIO: CAPPlugin {
             return;
         }
         
-        logEvent(method: methodName, eventName: name.uppercased(), call: call)
+        logEvent(eventName: name.uppercased(), call: call)
     }
     
     @objc func trackPageView(_ call: CAPPluginCall) {
@@ -282,6 +282,6 @@ public class BranchIO: CAPPlugin {
         
         log("\(methodName) invoked")
         
-        logEvent(method: methodName, eventName: BranchStandardEvent.viewItem.rawValue, call: call)
+        logEvent(eventName: BranchStandardEvent.viewItem.rawValue, call: call)
     }
 }
