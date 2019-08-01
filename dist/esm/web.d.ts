@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import { BranchPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions } from './definitions';
 export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     constructor();
     load(): Promise<void>;
@@ -22,21 +22,13 @@ export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
         options?: CreditHistoryOptions;
     }): Promise<any>;
     trackPageView(options: {
-        data?: {
-            [key: string]: any;
-        };
-        content_items?: {
-            [key: string]: any;
-        }[];
+        data?: EventData;
+        content_items?: ContentItem[];
     }): Promise<void>;
     logEvent(options: {
-        name: string;
-        data?: {
-            [key: string]: any;
-        };
-        content_items?: {
-            [key: string]: any;
-        }[];
+        name: EventName;
+        data?: EventData;
+        content_items?: ContentItem[];
     }): Promise<void>;
 }
 declare const BranchIO: BranchPluginWeb;
