@@ -40,6 +40,16 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
+
+    implementation 'com.android.support:appcompat-v7:21.1.1'
+    // required
+    implementation 'io.branch.sdk.android:library:3.+'
+
+    // optional
+    implementation 'com.android.support:customtabs:23.3.0' // Chrome Tab matching
+    implementation 'com.google.android.gms:play-services-ads:9+' // GAID matching
+    implementation 'com.google.android.gms:play-services-appindexing:9.+' // App indexing
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -1,12 +1,12 @@
 const branch = require('branch-sdk');
 
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchWebPlugin, CreditHistoryOptions, InitOptions } from './definitions';
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions } from './definitions';
 
-export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
+export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   constructor() {
     super({
-      name: 'BranchPlugin',
+      name: 'BranchIO',
       platforms: ['web']
     });
   }
@@ -16,25 +16,13 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
   }
 
   // General
-  async init(key: string, options?: InitOptions): Promise<any> {
-    branch.init(key, options);
+  async init(options: { key: string, options?: InitOptions}): Promise<any> {
+    branch.init(options.key, options.options);
   }
 
-  async autoAppIndex(options: AppIndexOptions): Promise<any>{
+  async disableTracking(options: { value: boolean }): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.autoAppIndex(options, (err: any, data: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
-  }
-
-  async disableTracking(value: boolean): Promise<any> {
-    return new Promise((resolve, reject) => {
-      branch.disableTracking(value, (err: any, data: any) => {
+      branch.disableTracking(options.value, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -45,9 +33,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
   }
 
   // Track users
-  async setIdentity(id: string): Promise<any> {
+  async setIdentity(options: { id: string }): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.setIdentity(id, (err: any, data: any) => {
+      branch.setIdentity(options.id, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -70,9 +58,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
   }
 
   // Referrals
-  async redeemRewards(amount: number, bucket?: string): Promise<any> {
+  async redeemRewards(options: { amount: number, bucket?: string}): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.redeemRewards(amount, bucket, (err: any, data: any) => {
+      branch.redeemRewards(options.amount, options.bucket, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -82,9 +70,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
     });
   }
 
-  async creditHistory(options?: CreditHistoryOptions): Promise<any> {
+  async creditHistory(options: { options?: CreditHistoryOptions }): Promise<any> {
     return new Promise((resolve, reject) => {
-      branch.creditHistory(options, (err: any, data: any) => {
+      branch.creditHistory(options.options, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -92,12 +80,16 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
         }
       });
     });
+  }
+
+  trackPageView(options: { data?: EventData, content_items?: ContentItem[] }): Promise<void> {
+    return this.logEvent({ name: 'VIEW_ITEM', ...options });
   }
 
   // Events
-  async logEvent(name: string, eventData?: { [key: string]: any }, eCommerceItems?: { [key: string]: any }[]): Promise<void> {
+  async logEvent(options: { name: EventName, data?: EventData, content_items?: ContentItem[] }): Promise<void> {
     return new Promise((resolve, reject) => {
-      branch.logEvent(name, eventData, eCommerceItems, (err: any, data: any) => {
+      branch.logEvent(options.name, options.data, options.content_items, (err: any, data: any) => {
         if (err) {
           reject(err);
         } else {
@@ -108,9 +100,9 @@ export class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
   }
 }
 
-const BranchPlugin = new BranchPluginWeb();
+const BranchIO = new BranchPluginWeb();
 
-export { BranchPlugin };
+export { BranchIO };
 
 import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(BranchPlugin);
+registerWebPlugin(BranchIO);

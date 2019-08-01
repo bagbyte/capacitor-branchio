@@ -1,19 +1,35 @@
 import { WebPlugin } from '@capacitor/core';
-import { AppIndexOptions, BranchWebPlugin, CreditHistoryOptions, InitOptions } from './definitions';
-export declare class BranchPluginWeb extends WebPlugin implements BranchWebPlugin {
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions } from './definitions';
+export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     constructor();
-    init(key: string, options?: InitOptions): Promise<any>;
-    autoAppIndex(options: AppIndexOptions): Promise<any>;
-    disableTracking(value: boolean): Promise<any>;
-    setIdentity(id: string): Promise<any>;
+    load(): Promise<void>;
+    init(options: {
+        key: string;
+        options?: InitOptions;
+    }): Promise<any>;
+    disableTracking(options: {
+        value: boolean;
+    }): Promise<void>;
+    setIdentity(options: {
+        id: string;
+    }): Promise<any>;
     logout(): Promise<any>;
-    redeemRewards(amount: number, bucket?: string): Promise<any>;
-    creditHistory(options?: CreditHistoryOptions): Promise<any>;
-    logEvent(name: string, eventData?: {
-        [key: string]: any;
-    }, eCommerceItems?: {
-        [key: string]: any;
-    }[]): Promise<void>;
+    redeemRewards(options: {
+        amount: number;
+        bucket?: string;
+    }): Promise<any>;
+    creditHistory(options: {
+        options?: CreditHistoryOptions;
+    }): Promise<any>;
+    trackPageView(options: {
+        data?: EventData;
+        content_items?: ContentItem[];
+    }): Promise<void>;
+    logEvent(options: {
+        name: EventName;
+        data?: EventData;
+        content_items?: ContentItem[];
+    }): Promise<void>;
 }
-declare const BranchPlugin: BranchPluginWeb;
-export { BranchPlugin };
+declare const BranchIO: BranchPluginWeb;
+export { BranchIO };
