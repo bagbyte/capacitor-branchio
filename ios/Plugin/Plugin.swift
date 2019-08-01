@@ -48,12 +48,16 @@ public class BranchIO: CAPPlugin {
     @objc func handleDidFinishLaunching(_ notification: NSNotification) {
         log("\(#function) invoked")
         
+        var launchOptions: [UIApplicationLaunchOptionsKey: Any] = nil
+        
         if let userInfo = notification.userInfo as? Dictionary<String,Any> {
-            if let launchOptions = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
-                Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
-                    print(params as? [String: AnyObject] ?? {})
-                }
+            if let options = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
+                launchOptions = options
             }
+        }
+        
+        Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
+            log("plugin succesfully initialized - \(params)")
         }
     }
     
@@ -217,12 +221,8 @@ public class BranchIO: CAPPlugin {
         }
     }
     
-    private func logEvent(method: String, eventName: String, call: CAPPluginCall) {
-        let event = BranchIOEvent(name: eventName)
+    private func updateEventObject(event: BranchEvent, data: Dictionary<String,Any>?, contentItems: Array<Dictionary<String,Any>>?, method: String = #function) {
         event.adType = .none
-        
-        let data = call.getObject("data")
-        let contentItems = call.getArray("content_items", [String:Any].self)
         
         if let data = data {
             for (key, value) in data {
@@ -256,6 +256,12 @@ public class BranchIO: CAPPlugin {
                 event.contentItems.add(BranchUniversalObject(dictionary: contentItem))
             }
         }
+    }
+    
+    private func logEvent(method: String, eventName: String, call: CAPPluginCall) {
+        let event = BranchIOEvent(name: eventName)
+        
+        updateEventObject(event: event, data: call.getObject("data"), contentItems: call.getArray("content_items", [String:Any].self))
         
         event.logEventWithCallback(callback: branchCallback(method: method, call: call))
     }
