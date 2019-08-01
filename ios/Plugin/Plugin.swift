@@ -48,7 +48,7 @@ public class BranchIO: CAPPlugin {
     @objc func handleDidFinishLaunching(_ notification: NSNotification) {
         log("\(#function) invoked")
         
-        var launchOptions: [UIApplicationLaunchOptionsKey: Any] = nil
+        var launchOptions: [UIApplicationLaunchOptionsKey: Any] = [:]
         
         if let userInfo = notification.userInfo as? Dictionary<String,Any> {
             if let options = userInfo["UIApplicationLaunchOptionsLocationKey"] as? [UIApplicationLaunchOptionsKey: Any] {
@@ -57,7 +57,7 @@ public class BranchIO: CAPPlugin {
         }
         
         Branch.getInstance().initSession(launchOptions: launchOptions) { (params, error) in
-            log("plugin succesfully initialized - \(params)")
+            self.log("plugin succesfully initialized - \(String(describing: params))")
         }
     }
     

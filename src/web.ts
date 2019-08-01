@@ -1,7 +1,7 @@
 const branch = require('branch-sdk');
 
 import { WebPlugin } from '@capacitor/core';
-import { BranchPlugin, CreditHistoryOptions, EventName, InitOptions } from './definitions';
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions } from './definitions';
 
 export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
   constructor() {
@@ -82,12 +82,12 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     });
   }
 
-  trackPageView(options: { data?: { [key: string]: any }, content_items?: { [key: string]: any }[]}): Promise<void> {
+  trackPageView(options: { data?: EventData, content_items?: ContentItem[] }): Promise<void> {
     return this.logEvent({ name: 'VIEW_ITEM', ...options });
   }
 
   // Events
-  async logEvent(options: { name: EventName, data?: { [key: string]: any }, content_items?: { [key: string]: any }[] }): Promise<void> {
+  async logEvent(options: { name: EventName, data?: EventData, content_items?: ContentItem[] }): Promise<void> {
     return new Promise((resolve, reject) => {
       branch.logEvent(options.name, options.data, options.content_items, (err: any, data: any) => {
         if (err) {
