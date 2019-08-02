@@ -91,7 +91,11 @@ In your `capacitor.config.json` file, you can use the following configuration:
     "BranchIO": {
       "test": true,
       "tracking_disabled": false,
-      "verbose": true
+      "verbose": true,
+      "keys": {        <--- This is relevant only if using the web SDK
+        "live": "key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM",
+        "test": "key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq"
+      }
     }
   }
 ```

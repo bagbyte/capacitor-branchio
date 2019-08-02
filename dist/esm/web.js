@@ -95,7 +95,7 @@ var BranchPluginWeb = /** @class */ (function (_super) {
         var keys = this.getConfig(this.CONFIG_KEY_KEYS, {});
         var environment = this.testMode ? 'test' : 'live';
         if (!(environment in keys) || !keys[environment]) {
-            throw Error(this.config.name + " plugin cannot be loaded, Branch " + environment + " key is missing");
+            this.log("Branch cannot be initialized without the " + environment + " key");
         }
         return keys[environment];
     };
