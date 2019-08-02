@@ -1,5 +1,7 @@
 package com.bagbyte.capacitor.plugins;
 
+import android.content.Intent;
+
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.NativePlugin;
@@ -71,6 +73,8 @@ public class BranchIO extends Plugin {
 
     @Override
     protected void handleOnStart() {
+        super.handleOnStart();
+
         branchInstance = Branch.getAutoInstance(this.getActivity().getApplication());
         branchInstance.disableTracking(trackingDisabled);
 
@@ -88,6 +92,13 @@ public class BranchIO extends Plugin {
             }
 
         }, getActivity().getIntent().getData(), getActivity());
+    }
+
+    @Override
+    protected void handleOnNewIntent(Intent intent) {
+        super.handleOnNewIntent(intent);
+
+        this.getActivity().setIntent(intent);
     }
 
     private void log(String message) {
@@ -109,9 +120,9 @@ public class BranchIO extends Plugin {
         if (data != null) {
             JSObject result = new JSObject();
             result.put("result", data);
-            call.success(result);
+            call.resolve(result);
         } else {
-            call.success();
+            call.resolve();
         }
     }
 

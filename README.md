@@ -1,5 +1,5 @@
 # @bagbyte/capacitor-branchio
-This is Branch.io plugin for Capacitor.
+This is Branch.io plugin for Capacitor. This plugin supports `web`, `iOS` and `Android`.
 
 ## Installation
 
@@ -8,11 +8,45 @@ This is Branch.io plugin for Capacitor.
 $ npm install @bagbyte/capacitor-branchio
 ```
 
-### Step 2: Plugin configuration and initialization
+### Step 2: Configure the plugin
+In your `capacitor.config.json` file, you can use the following configuration:
+
+```json
+  "plugins": {
+    [...]
+    "BranchIO": {
+      "test": true,
+      "tracking_disabled": false,
+      "verbose": true
+    }
+  }
+```
+
+1. `test`can be used to set the test mode on
+2. `tracking_disabled` can be used to set the initial status of the tracking
+3. `verbose` is used to set the logging on
+
+### Step 3: Platform configuration
 The following configuration assumes that your application supports:
-1. universal links with the domain `EXAMPLE.com`
+1. Universal links with the domain `EXAMPLE.com`
 2. Branch app links with the domain `EXAMPLE.app.link`
-3. custom schema `EXAMPLESCHEMA://`
+3. Custom schema `EXAMPLESCHEMA://`
+
+#### Web
+To configure the web SDK, change the `capacitor.config.json` file as follow:
+
+```json
+  "plugins": {
+    [...]
+    "BranchIO": {
+      [...]
+      "keys": {
+        "live": "key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM",
+        "test": "key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq"
+      }
+    }
+  }
+```
 
 #### Android
 To configure your Android app, the `AndroidManifest.xml` needs some changes (as per this [link](https://docs.branch.io/apps/android/#configure-app)). The same steps have been summarized in the following 5 steps:
@@ -82,29 +116,6 @@ In the `Info.plist` file, add the following keys.
 	</array>
 ```
 
-#### Capacitor plugin configuration
-In your `capacitor.config.json` file, you can use the following configuration:
-
-```json
-  "plugins": {
-    [...]
-    "BranchIO": {
-      "test": true,
-      "tracking_disabled": false,
-      "verbose": true,
-      "keys": {        <--- This is relevant only if using the web SDK
-        "live": "key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM",
-        "test": "key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq"
-      }
-    }
-  }
-```
-
-1. `test`can be used to set the test mode on
-2. `tracking_disabled` can be used to set the initial status of the tracking
-3. `verbose` is used to set the logging on
-4. `keys` is used to configure the web SDK, if the proper key is not configure, the plugin will not be initialized
-
 ## Methods
 
 ### disableTracking(_options_: { _value_: _boolean_ }): void
@@ -157,5 +168,6 @@ let contentItems = {
   $canonical_identifier: 'Login',
   $canonical_url: '/login',
 };
-Plugins.BranchPlugin.logEvent({ content_items: [contentItems] });
+
+Plugins.BranchPlugin.trackPageView({ content_items: [contentItems] });
 ```

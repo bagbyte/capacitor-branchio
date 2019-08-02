@@ -1,7 +1,15 @@
+# General
 .DS_Store
 .idea
-
 *.log
-
-xcuserdata
 node_modules
+
+# Android
+build
+
+# iOS files
+Pods
+Build
+xcuserdata
+
+

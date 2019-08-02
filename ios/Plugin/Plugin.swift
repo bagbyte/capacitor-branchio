@@ -132,9 +132,9 @@ public class BranchIO: CAPPlugin {
         log("\(method) succeeded")
         
         if let data = data {
-            call.success(["result" : data])
+            call.resolve(["result" : data])
         } else {
-            call.success()
+            call.resolve()
         }
     }
     
