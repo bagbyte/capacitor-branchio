@@ -102,7 +102,7 @@ In your `capacitor.config.json` file, you can use the following configuration:
 
 ## Methods
 
-### disableTracking(_options_: { _value_: _boolean_ }): Promise<boolean>
+### disableTracking(_options_: { _value_: _boolean_ }): void
 It is used to disable or enable the tracking (based on customer's preference).
 
 ```js

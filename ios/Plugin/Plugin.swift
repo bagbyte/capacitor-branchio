@@ -14,8 +14,8 @@ public class BranchIO: CAPPlugin {
     let defaultHistoryListLenght = 100
     
     let configKeyTestMode = "test"
-    let configTrackingDisabled = "tracking_disabled"
-    let configVerbose = "verbose"
+    let configKeyTrackingDisabled = "tracking_disabled"
+    let configKeyVerbose = "verbose"
     
     var testMode = true
     var trackingDisabled = false
@@ -24,14 +24,14 @@ public class BranchIO: CAPPlugin {
     // Plugin setup
     public override func load() {
         testMode = getConfigValue(configKeyTestMode) as? Bool ?? testMode
-        trackingDisabled = getConfigValue(configTrackingDisabled) as? Bool ?? trackingDisabled
-        verbose = getConfigValue(configVerbose) as? Bool ?? verbose
+        trackingDisabled = getConfigValue(configKeyTrackingDisabled) as? Bool ?? trackingDisabled
+        verbose = getConfigValue(configKeyVerbose) as? Bool ?? verbose
         
         log("Loading plugin")
         log("Config \(configKeyTestMode): \(testMode)")
-        log("Config \(configTrackingDisabled): \(trackingDisabled)")
-        log("Config \(configVerbose): \(verbose)")
-        
+        log("Config \(configKeyTrackingDisabled): \(trackingDisabled)")
+        log("Config \(configKeyVerbose): \(verbose)")
+
         Branch.setUseTestBranchKey(testMode)
         Branch.setTrackingDisabled(trackingDisabled)
         
@@ -152,7 +152,6 @@ public class BranchIO: CAPPlugin {
         }
         
         Branch.setTrackingDisabled(value)
-        call.success()
     }
     
     @objc func setIdentity(_ call: CAPPluginCall) {

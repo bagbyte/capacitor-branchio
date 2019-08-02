@@ -11,17 +11,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -58,77 +47,111 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var branch = require('branch-sdk');
+// @ts-ignore
+import config from '../../../../../capacitor.config.json';
 import { WebPlugin } from '@capacitor/core';
 var BranchPluginWeb = /** @class */ (function (_super) {
     __extends(BranchPluginWeb, _super);
     function BranchPluginWeb() {
-        return _super.call(this, {
+        var _this = _super.call(this, {
             name: 'BranchIO',
             platforms: ['web']
         }) || this;
+        _this.CONFIG_KEY_TEST_MODE = "test";
+        _this.CONFIG_KEY_TRACKING_DISABLED = "tracking_disabled";
+        _this.CONFIG_KEY_VERBOSE = "verbose";
+        _this.CONFIG_KEY_KEYS = "keys";
+        _this.testMode = true;
+        _this.trackingDisabled = false;
+        _this.verbose = false;
+        return _this;
     }
     BranchPluginWeb.prototype.load = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        this.testMode = this.getConfig(this.CONFIG_KEY_TEST_MODE, this.testMode);
+                        this.trackingDisabled = this.getConfig(this.CONFIG_KEY_TRACKING_DISABLED, this.trackingDisabled);
+                        this.verbose = this.getConfig(this.CONFIG_KEY_VERBOSE, this.verbose);
+                        this.key = this.getBranchKey();
+                        return [4 /*yield*/, this.initBranch({ key: this.key, options: { tracking_disabled: this.trackingDisabled } })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
     };
-    // General
-    BranchPluginWeb.prototype.init = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                branch.init(options.key, options.options);
-                return [2 /*return*/];
-            });
-        });
+    BranchPluginWeb.prototype.getConfig = function (key, defaultValue) {
+        if (this.config.name in config.plugins && config.plugins[this.config.name] != null) {
+            if (key in config.plugins[this.config.name]) {
+                return config.plugins[this.config.name][key];
+            }
+        }
+        return defaultValue;
     };
-    BranchPluginWeb.prototype.disableTracking = function (options) {
+    BranchPluginWeb.prototype.getBranchKey = function () {
+        var keys = this.getConfig(this.CONFIG_KEY_KEYS, {});
+        var environment = this.testMode ? 'test' : 'live';
+        if (!(environment in keys) || !keys[environment]) {
+            throw Error(this.config.name + " plugin cannot be loaded, Branch " + environment + " key is missing");
+        }
+        return keys[environment];
+    };
+    BranchPluginWeb.prototype.invokeAPI = function (pluginMethod, apiMethod) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
+        }
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
+                this.log(pluginMethod + " invoked");
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.disableTracking(options.value, function (err, data) {
+                        branch[apiMethod](params, function (err, data) {
                             if (err) {
+                                _this.log(pluginMethod + " failed - " + err.message);
                                 reject(err);
                             }
                             else {
-                                resolve(data);
+                                _this.log(pluginMethod + " succeeded - " + data);
+                                resolve({ result: data });
                             }
                         });
                     })];
             });
         });
+    };
+    BranchPluginWeb.prototype.log = function (message) {
+        if (this.verbose) {
+            console.log(this.config.name + " - " + message);
+        }
+    };
+    BranchPluginWeb.prototype.initBranch = function (options) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.invokeAPI('initBranch', 'init', options.key, options.options)];
+            });
+        });
+    };
+    // General
+    BranchPluginWeb.prototype.disableTracking = function (options) {
+        this.log('disableTracking invoked');
+        branch.disableTracking(options.value);
     };
     // Track users
     BranchPluginWeb.prototype.setIdentity = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.setIdentity(options.id, function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
+                return [2 /*return*/, this.invokeAPI('setIdentity', 'setIdentity', options.id)];
             });
         });
     };
     BranchPluginWeb.prototype.logout = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.logout(function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
+                return [2 /*return*/, this.invokeAPI('logout', 'logout')];
             });
         });
     };
@@ -136,52 +159,29 @@ var BranchPluginWeb = /** @class */ (function (_super) {
     BranchPluginWeb.prototype.redeemRewards = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.redeemRewards(options.amount, options.bucket, function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
+                return [2 /*return*/, this.invokeAPI('redeemRewards', 'redeemRewards', options.amount, options.bucket)];
             });
         });
     };
     BranchPluginWeb.prototype.creditHistory = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.creditHistory(options.options, function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
+                return [2 /*return*/, this.invokeAPI('creditHistory', 'creditHistory', options.options)];
             });
         });
-    };
-    BranchPluginWeb.prototype.trackPageView = function (options) {
-        return this.logEvent(__assign({ name: 'VIEW_ITEM' }, options));
     };
     // Events
     BranchPluginWeb.prototype.logEvent = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve, reject) {
-                        branch.logEvent(options.name, options.data, options.content_items, function (err, data) {
-                            if (err) {
-                                reject(err);
-                            }
-                            else {
-                                resolve(data);
-                            }
-                        });
-                    })];
+                return [2 /*return*/, this.invokeAPI('logEvent', 'logEvent', options.name, options.data, options.content_items)];
+            });
+        });
+    };
+    BranchPluginWeb.prototype.trackPageView = function (options) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.invokeAPI('trackPageView', 'logEvent', 'VIEW_ITEM', options.data, options.content_items)];
             });
         });
     };

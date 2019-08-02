@@ -1,35 +1,44 @@
 import { WebPlugin } from '@capacitor/core';
-import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions } from './definitions';
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, Result } from './definitions';
 export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
+    private CONFIG_KEY_TEST_MODE;
+    private CONFIG_KEY_TRACKING_DISABLED;
+    private CONFIG_KEY_VERBOSE;
+    private CONFIG_KEY_KEYS;
+    private key;
+    private testMode;
+    private trackingDisabled;
+    private verbose;
     constructor();
     load(): Promise<void>;
-    init(options: {
-        key: string;
-        options?: InitOptions;
-    }): Promise<any>;
+    private getConfig;
+    private getBranchKey;
+    private invokeAPI;
+    private log;
+    private initBranch;
     disableTracking(options: {
         value: boolean;
-    }): Promise<void>;
+    }): void;
     setIdentity(options: {
         id: string;
-    }): Promise<any>;
-    logout(): Promise<any>;
+    }): Promise<Result<any>>;
+    logout(): Promise<Result<boolean>>;
     redeemRewards(options: {
         amount: number;
         bucket?: string;
-    }): Promise<any>;
+    }): Promise<Result<boolean>>;
     creditHistory(options: {
         options?: CreditHistoryOptions;
-    }): Promise<any>;
-    trackPageView(options: {
-        data?: EventData;
-        content_items?: ContentItem[];
-    }): Promise<void>;
+    }): Promise<Result<any[]>>;
     logEvent(options: {
         name: EventName;
         data?: EventData;
         content_items?: ContentItem[];
-    }): Promise<void>;
+    }): Promise<Result<any>>;
+    trackPageView(options: {
+        data?: EventData;
+        content_items?: ContentItem[];
+    }): Promise<Result<any>>;
 }
 declare const BranchIO: BranchPluginWeb;
 export { BranchIO };
