@@ -63,7 +63,7 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     const environment = this.testMode ? 'test' : 'live';
 
     if (!(environment in keys) || !keys[environment]) {
-      throw Error(`${this.config.name} plugin cannot be loaded, Branch ${environment} key is missing`);
+      this.log(`Branch cannot be initialized without the ${environment} key`)
     }
 
     return keys[environment];
