@@ -113,7 +113,13 @@ public class BranchIO extends Plugin {
         } else {
             call.success();
         }
+    }
 
+    @PluginMethod()
+    public void initBranch(final PluginCall call) {
+        JSObject result = new JSObject();
+        result.put("result", null);
+        call.success(result);
     }
 
     @PluginMethod()
@@ -130,7 +136,6 @@ public class BranchIO extends Plugin {
         }
 
         branchInstance.disableTracking(call.getBoolean("value"));
-        call.success();
     }
 
     @PluginMethod()
