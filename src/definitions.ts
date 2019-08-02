@@ -120,7 +120,6 @@ export interface Result<T> {
 
 export interface BranchPlugin {
   // General
-  initBranch(options: { key: string, options?: InitOptions }): Promise<any>;
   disableTracking(options: { value: boolean }): void;
 
   // Track users

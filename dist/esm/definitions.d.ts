@@ -78,10 +78,6 @@ export interface Result<T> {
     result: T;
 }
 export interface BranchPlugin {
-    initBranch(options: {
-        key: string;
-        options?: InitOptions;
-    }): Promise<any>;
     disableTracking(options: {
         value: boolean;
     }): void;

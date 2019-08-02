@@ -139,10 +139,6 @@ public class BranchIO: CAPPlugin {
     }
     
     // Plugin methods
-    @objc func initBranch(_ call: CAPPluginCall) {
-        call.success(["result": []])
-    }
-    
     @objc func disableTracking(_ call: CAPPluginCall) {
         let methodName = #function
         

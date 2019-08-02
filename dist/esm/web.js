@@ -128,7 +128,6 @@ var BranchPluginWeb = /** @class */ (function (_super) {
             console.log(this.config.name + " - " + message);
         }
     };
-    // General
     BranchPluginWeb.prototype.initBranch = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -136,6 +135,7 @@ var BranchPluginWeb = /** @class */ (function (_super) {
             });
         });
     };
+    // General
     BranchPluginWeb.prototype.disableTracking = function (options) {
         this.log('disableTracking invoked');
         branch.disableTracking(options.value);

@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, InitOptions, Result } from './definitions';
+import { BranchPlugin, ContentItem, CreditHistoryOptions, EventData, EventName, Result } from './definitions';
 export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     private CONFIG_KEY_TEST_MODE;
     private CONFIG_KEY_TRACKING_DISABLED;
@@ -15,10 +15,7 @@ export declare class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     private getBranchKey;
     private invokeAPI;
     private log;
-    initBranch(options: {
-        key: string;
-        options?: InitOptions;
-    }): Promise<Result<any>>;
+    private initBranch;
     disableTracking(options: {
         value: boolean;
     }): void;

@@ -93,11 +93,11 @@ export class BranchPluginWeb extends WebPlugin implements BranchPlugin {
     }
   }
 
-  // General
-  async initBranch(options: { key: string, options?: InitOptions}): Promise<Result<any>> {
+  private async initBranch(options: { key: string, options?: InitOptions}): Promise<Result<any>> {
     return this.invokeAPI('initBranch', 'init', options.key, options.options);
   }
 
+  // General
   disableTracking(options: { value: boolean }): void {
     this.log('disableTracking invoked');
 

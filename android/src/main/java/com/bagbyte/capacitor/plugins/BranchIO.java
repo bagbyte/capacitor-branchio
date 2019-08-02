@@ -116,13 +116,6 @@ public class BranchIO extends Plugin {
     }
 
     @PluginMethod()
-    public void initBranch(final PluginCall call) {
-        JSObject result = new JSObject();
-        result.put("result", null);
-        call.success(result);
-    }
-
-    @PluginMethod()
     public void disableTracking(final PluginCall call) {
         final String methodName = call.getMethodName();
 
