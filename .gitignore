@@ -7,8 +7,9 @@ node_modules
 # Android
 build
 
-# iOS
+# iOS files
 Pods
+Build
 xcuserdata
 
 
