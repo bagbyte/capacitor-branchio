@@ -103,6 +103,7 @@ In your `capacitor.config.json` file, you can use the following configuration:
 1. `test`can be used to set the test mode on
 2. `tracking_disabled` can be used to set the initial status of the tracking
 3. `verbose` is used to set the logging on
+4. `keys` is used to configure the web SDK, if the proper key is not configure, the plugin will not be initialized
 
 ## Methods
 
