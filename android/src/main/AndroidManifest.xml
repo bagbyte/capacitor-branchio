@@ -1,5 +1,18 @@
 
-  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.bagbyte.capacitor.plugins">
-    <application android:launchMode="singleTask"/>
-  </manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bagbyte.capacitor.plugins">
+
+  <application android:launchMode="singleTask">
+    <meta-data android:name="io.branch.sdk.BranchKey" android:value="@string/branchio_key_live" />
+    <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="@string/branchio_key_test" />
+    <meta-data android:name="io.branch.sdk.TestMode" android:value="@bool/branchio_test_mode" />
+
+    <!-- Branch install referrer tracking (optional) -->
+    <receiver android:enabled="@bool/branchio_track_referral_active" android:name="io.branch.referral.InstallListener" android:exported="true">
+      <intent-filter>
+        <action android:name="com.android.vending.INSTALL_REFERRER" />
+      </intent-filter>
+    </receiver>
+  </application>
+
+</manifest>

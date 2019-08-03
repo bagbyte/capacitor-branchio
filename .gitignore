@@ -6,6 +6,7 @@ node_modules
 
 # Android
 build
+.gradle
 
 # iOS files
 Pods

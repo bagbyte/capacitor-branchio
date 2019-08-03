@@ -18,6 +18,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        resValue "bool", "branchio_test_mode", "false"
+        resValue "bool", "branchio_track_referral_active", "false"
     }
     buildTypes {
         release {
@@ -55,3 +58,28 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
+task configure() {
+    println "Configuring the plugin"
+
+    def jsonFile = file('../../../../capacitor.config.json')
+    def config = new groovy.json.JsonSlurper().parseText(jsonFile.text)
+
+    if (config.plugins && config.plugins.BranchIO) {
+        if (!('keys' in config.plugins.BranchIO) || !('live' in config.plugins.BranchIO.keys) || !('test' in config.plugins.BranchIO.keys)) {
+            throw new Exception("BranchIO plugin - Missing 'keys' in your 'capacitor.config.json'")
+        }
+
+        if ('test' in config.plugins.BranchIO) {
+            android.defaultConfig.resValue("bool", "branchio_test_mode", String.valueOf(config.plugins.BranchIO.test))
+        }
+
+        if ('track_referral' in config.plugins.BranchIO) {
+            android.defaultConfig.resValue("bool", "branchio_track_referral_active", String.valueOf(config.plugins.BranchIO.track_referral))
+        }
+
+        android.defaultConfig.resValue("string", "branchio_key_live", config.plugins.BranchIO.keys.live)
+        android.defaultConfig.resValue("string", "branchio_key_test", config.plugins.BranchIO.keys.test)
+    } else {
+        throw new Exception("BranchIO plugin needs to be configured in your 'capacitor.config.json'")
+    }
+}

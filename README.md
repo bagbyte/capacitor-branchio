@@ -12,19 +12,29 @@ $ npm install @bagbyte/capacitor-branchio
 In your `capacitor.config.json` file, you can use the following configuration:
 
 ```json
+{
+  [...]
   "plugins": {
     [...]
     "BranchIO": {
       "test": true,
       "tracking_disabled": false,
-      "verbose": true
+      "verbose": true,
+      "track_referral": false,
+      "keys": {
+        "live": "key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM",
+        "test": "key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq"
+      }
     }
   }
+}
 ```
 
 1. `test`can be used to set the test mode on
 2. `tracking_disabled` can be used to set the initial status of the tracking
 3. `verbose` is used to set the logging on
+4. `track_referral` is used to enable Branch install referrer tracking
+5. `keys` contains the live and test keys, both must be provided, the one in use will be determined by the value of the `test` variable
 
 ### Step 3: Platform configuration
 The following configuration assumes that your application supports:
@@ -32,27 +42,10 @@ The following configuration assumes that your application supports:
 2. Branch app links with the domain `EXAMPLE.app.link`
 3. Custom schema `EXAMPLESCHEMA://`
 
-#### Web
-To configure the web SDK, change the `capacitor.config.json` file as follow:
-
-```json
-  "plugins": {
-    [...]
-    "BranchIO": {
-      [...]
-      "keys": {
-        "live": "key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM",
-        "test": "key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq"
-      }
-    }
-  }
-```
-
 #### Android
 To configure your Android app, the `AndroidManifest.xml` needs some changes (as per this [link](https://docs.branch.io/apps/android/#configure-app)). The same steps have been summarized in the following 5 steps:
 
-1. Add `android:launchMode="singleTask"` in your `<activity>` tag
-2. Inside your `<activity>` tag add the following `intent-filter` in order to support Branch URI schema 
+1. Inside your `<activity>` tag add the following `intent-filter` in order to support Branch URI schema 
 ```xml
 <intent-filter>
     <data android:scheme="EXAMPLESCHEMA" />
@@ -61,7 +54,7 @@ To configure your Android app, the `AndroidManifest.xml` needs some changes (as 
     <category android:name="android.intent.category.BROWSABLE" />
 </intent-filter>
 ```
-3. (Optional) Insode your `<activity>` tag add the following `intent-filter` in order to support Branch App Links 
+2. (Optional) Insode your `<activity>` tag add the following `intent-filter` in order to support Branch App Links 
 ```xml
 <intent-filter android:autoVerify="true">
     <action android:name="android.intent.action.VIEW" />
@@ -72,19 +65,6 @@ To configure your Android app, the `AndroidManifest.xml` needs some changes (as 
     <data android:scheme="https" android:host="EXAMPLE.test-app.link" />
     <data android:scheme="https" android:host="EXAMPLE-alternate.test-app.link" />
 </intent-filter>
-```
-4. After `<activity>` tag, add the following `meta-data` with your Branch keys
-```xml
-  <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_kaFuWw8WvY7yn1d9yYiP8gokwqjV0Sw" />
-  <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr" />
-```
-5. (Optional) Add the following lines for Branch install referrer tracking
-```xml
-<receiver android:name="io.branch.referral.InstallListener" android:exported="true">
-    <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
-</receiver>
 ```
 
 To load the plugin, in the file `android/app/src/main/java/**/**/MainActivity.java`, add the plugin to the initialization list:
@@ -101,19 +81,19 @@ this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
 In the `Info.plist` file, add the following keys.
 
 ```xml
-	<key>branch_app_domain</key>
-	<string>EXAMPLE.app.link</string>
-	<key>branch_key</key>
-	<dict>
-		<key>live</key>
-		<string>key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM</string>
-		<key>test</key>
-		<string>key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq</string>
-	</dict>
-	<key>branch_universal_link_domains</key>
-	<array>
-		<string>EXAMPLE.com</string>
-	</array>
+<key>branch_app_domain</key>
+<string>EXAMPLE.app.link</string>
+<key>branch_key</key>
+<dict>
+    <key>live</key>
+    <string>key_live_pjSAy0EGED62uHhGUr9GfigcxyaWk5kM</string>
+    <key>test</key>
+    <string>key_test_kbHvA7sJFB3YvNgHNtXzYmpowrj6k8fq</string>
+</dict>
+<key>branch_universal_link_domains</key>
+<array>
+    <string>EXAMPLE.com</string>
+</array>
 ```
 
 ## Methods
