@@ -44,12 +44,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
 
-    implementation 'com.android.support:appcompat-v7:21.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     // required
     implementation 'io.branch.sdk.android:library:3.+'
 
     // optional
-    implementation 'com.android.support:customtabs:23.3.0' // Chrome Tab matching
+    implementation 'com.android.support:customtabs:28.0.0' // Chrome Tab matching
     implementation 'com.google.android.gms:play-services-ads:9+' // GAID matching
     implementation 'com.google.android.gms:play-services-appindexing:9.+' // App indexing
 
@@ -60,6 +60,12 @@ dependencies {
 
 task configure() {
     println "Configuring the plugin"
+
+    if (rootProject == project) {
+        android.defaultConfig.resValue("string", "branchio_key_live", "")
+        android.defaultConfig.resValue("string", "branchio_key_test", "")
+        return
+    }
 
     def jsonFile = file('../../../../capacitor.config.json')
     def config = new groovy.json.JsonSlurper().parseText(jsonFile.text)
