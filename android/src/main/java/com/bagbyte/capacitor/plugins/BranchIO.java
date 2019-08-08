@@ -75,7 +75,16 @@ public class BranchIO extends Plugin {
     protected void handleOnStart() {
         super.handleOnStart();
 
-        branchInstance = Branch.getAutoInstance(this.getActivity().getApplication());
+        // Branch logging for debugging
+        if (testMode && verbose) {
+            Branch.enableDebugMode();
+        }
+
+        // Branch object initialization
+        Branch.getAutoInstance(this.getActivity().getApplication());
+
+        branchInstance = Branch.getInstance();
+
         branchInstance.disableTracking(trackingDisabled);
 
         branchInstance.initSession(new Branch.BranchReferralInitListener() {
@@ -99,6 +108,13 @@ public class BranchIO extends Plugin {
         super.handleOnNewIntent(intent);
 
         this.getActivity().setIntent(intent);
+    }
+
+    @Override
+    protected void handleOnStop() {
+        super.handleOnStop();
+
+        branchInstance.logout();
     }
 
     private void log(String message) {
@@ -256,7 +272,6 @@ public class BranchIO extends Plugin {
                 }
             }
         }
-
     }
 
     private void logEvent(final String methodName, final String eventName, final PluginCall call) {
@@ -272,7 +287,7 @@ public class BranchIO extends Plugin {
                 }
             };
 
-            event.logEvent(this.getContext(), callback);
+            event.logEvent(this.getActivity(), callback);
         } catch (Exception e) {
             call.reject(e.getLocalizedMessage(), e);
         }
